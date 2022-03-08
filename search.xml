@@ -1,0 +1,192 @@
+<?xml version="1.0" encoding="utf-8"?>
+<search>
+  <entry>
+    <title>Qt开发小技巧</title>
+    <url>/Phil-Mao/2022/03/08/Qt%E5%BC%80%E5%8F%91%E5%B0%8F%E6%8A%80%E5%B7%A7/</url>
+    <content><![CDATA[<h2 id="Qt"><a href="#Qt" class="headerlink" title="Qt"></a>Qt</h2><ol>
+<li>遇到 Qt 报错<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">qt.qpa.plugin: Could not find the Qt platform plugin &quot;windows&quot; in &quot;&quot;</span><br><span class="line">This application failed to start because no Qt platform plugin could be initialized. Reinstalling the application may fix this problem.</span><br></pre></td></tr></table></figure></li>
+</ol>
+<p>使用 qt 自带的<code>windeployqt.exe</code> 重新运行一下可执行文件，就OK 啦！</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">windeployqt ./$APP_NAME.exe</span><br></pre></td></tr></table></figure>
+<p>重新初始化一些qt的依赖库和显示窗口，就完事了。</p>
+]]></content>
+      <categories>
+        <category>编程开发</category>
+      </categories>
+      <tags>
+        <tag>C++</tag>
+        <tag>经验分享</tag>
+        <tag>Qt</tag>
+        <tag>Visual Studio</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Windows下配置Mingw64和MSYS2环境</title>
+    <url>/Phil-Mao/2022/03/08/Windows%E4%B8%8B%E9%85%8D%E7%BD%AEMingw64%E5%92%8CMSYS2%E7%8E%AF%E5%A2%83/</url>
+    <content><![CDATA[<h2 id="下载MSYS2"><a href="#下载MSYS2" class="headerlink" title="下载MSYS2"></a>下载MSYS2</h2><p>MSYS2是一组工具和库，提供一个易于使用的环境，用于构建、安装和运行本地 Windows 软件。下载地址：<a href="https://www.msys2.org/">MSYS2 latest 下载地址</a></p>
+<h2 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h2><p>官网有详细的安装步骤，这里不再赘述，参考<a href="https://www.msys2.org/">安装手册</a></p>
+<h2 id="更换国内镜像源"><a href="#更换国内镜像源" class="headerlink" title="更换国内镜像源"></a>更换国内镜像源</h2><p>在安装新包之前，建议把MSYS2使用的镜像源换成国内源。默认路径安装的话，需要修改的文件在 <code>C:\msys64\etc\pacman.d</code> 文件夹内，把<code>mirrorlist.clang32</code>、<code>mirrorlist.clang64</code> 等7个文件进行如下修改：<br><img src="https://img-blog.csdnimg.cn/cb5f817ca63c4a16b3dea6f87e44d50d.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBAQml0X0xlZw==,size_20,color_FFFFFF,t_70,g_se,x_16" alt="修改前"></p>
+<p><img src="https://img-blog.csdnimg.cn/e716e870e2c04e9e9f389651f9ba8763.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBAQml0X0xlZw==,size_20,color_FFFFFF,t_70,g_se,x_16" alt="修改后"></p>
+<h2 id="安装新库"><a href="#安装新库" class="headerlink" title="安装新库"></a>安装新库</h2><p>接着就是按照编译的需要，安装相应的库文件</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">@REM Make sure start with ucrt64 msys2 environment</span><br><span class="line">pacman -Syu </span><br><span class="line">pacman -S mingw-w64-ucrt-x86_64-cmake --needed</span><br></pre></td></tr></table></figure>
+
+<p>安装新包时，选择带<code>ucrt</code>的包进行安装</p>
+<blockquote>
+<p>ucrt64：Visual Studio的新宠，全名是Universal C Runtime，用来替代前面mingw64&amp;w32里的msvcrt。ucrt不支持加载msvcrt的产物，因此老版本Windows（&lt;10）不能直接兼容基于它的软件。但是这不是无理由的激进，要知道msvcrt在当前开发环境里真的是让开发打哑谜，（原生）不支持C99，不支持UTF8</p>
+</blockquote>
+]]></content>
+      <categories>
+        <category>编程开发</category>
+      </categories>
+      <tags>
+        <tag>经验分享</tag>
+        <tag>Windows</tag>
+        <tag>Mingw</tag>
+        <tag>MSYS2</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Linux下编译DCNv2</title>
+    <url>/Phil-Mao/2022/03/08/Linux%E4%B8%8B%E7%BC%96%E8%AF%91DCNv2/</url>
+    <content><![CDATA[<p>最近需要编译一下DCN这个网络，使用<code>conda</code> 管理依赖库是真的方便，需要的东西往里放，只要版本之间不冲突，对编译代码十分友好。</p>
+<h1 id="配置"><a href="#配置" class="headerlink" title="配置"></a>配置</h1><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">GPU：RTX 3080</span><br><span class="line">系统： Linux Mint 20.1 Cinnamon 4.8.6</span><br><span class="line">Cuda: 11.1</span><br><span class="line">Pytorch: 1.8.1</span><br></pre></td></tr></table></figure>
+<h1 id="运行环境"><a href="#运行环境" class="headerlink" title="运行环境"></a>运行环境</h1><p>根据需要的依赖库下载对应的conda环境，这里提供我自己使用的conda 环境下载地址，其实有很多依赖库是用不着的：<br><code>https://github.com/Phil-Mao/AnacondaRecipies/tree/master/_environments</code><br>Clone之后，创建一个conda环境：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">conda env create -n mvs -f _environments/mvs.fixed.yml</span><br></pre></td></tr></table></figure>
+<p>激活<code>mvs</code>环境，<code>conda activate mvs</code>:<br><img src="https://img-blog.csdnimg.cn/727d92022b3541bd9d52b998f174532a.png?x-oss-process=image/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBAQml0X0xlZw==,size_20,color_FFFFFF,t_70,g_se,x_16" alt="激活mvs"></p>
+<h1 id="DCNv2-latest"><a href="#DCNv2-latest" class="headerlink" title="DCNv2-latest"></a>DCNv2-latest</h1><p>这里我用的是一个比较新的版本：<br><a href="https://github.com/jinfagang/DCNv2_latest">https://github.com/jinfagang/DCNv2_latest</a></p>
+<h1 id="编译"><a href="#编译" class="headerlink" title="编译"></a>编译</h1><p>这里需要指定<code>cuda</code>对应版本安装的位置：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">set CUDA_HOME=/usr/local/cuda-11.1</span><br></pre></td></tr></table></figure>
+<p>一键编译：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">python setup.py build develop</span><br></pre></td></tr></table></figure>
+<p><img src="https://img-blog.csdnimg.cn/c6554a0bc99c4a0c94e2fb9e9de4880a.png" alt="compile"><br>编译成功：<br><img src="https://img-blog.csdnimg.cn/2e522537473c4acea0607e9bfdb3ae87.png?x-oss-process=image/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBAQml0X0xlZw==,size_20,color_FFFFFF,t_70,g_se,x_16" alt="end"><br>编译后生成的文件：<br><img src="https://img-blog.csdnimg.cn/786eb166867e464e9dc69963c0ec2d46.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBAQml0X0xlZw==,size_19,color_FFFFFF,t_70,g_se,x_16" alt="编译完成"><br>build完之后，目前只是在当前文件夹下有.so文件，现在我们需要把他装载到我们的环境里面，这里直接运行</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">python setup.py install</span><br></pre></td></tr></table></figure>
+<p>在当前的<code>conda</code>环境里进行第三方库的安装：<br><img src="https://img-blog.csdnimg.cn/050642bff12446f99a5d065898f52e96.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBAQml0X0xlZw==,size_20,color_FFFFFF,t_70,g_se,x_16" alt="安装到虚拟环境中"><br>可以看到编译好的<code>DCNv2</code>被安装在了 <code>conda</code> 环境下的包管理目录下，激活环境：<br><img src="https://img-blog.csdnimg.cn/13c6a6fb8fe54f87a3f5e1b27c2be010.png" alt="成功安装"><br>至此，<code>DCNv2</code>的编译和安装就已经完成了。</p>
+]]></content>
+      <categories>
+        <category>编程开发</category>
+      </categories>
+      <tags>
+        <tag>C++</tag>
+        <tag>经验分享</tag>
+        <tag>Linux</tag>
+        <tag>DCN</tag>
+        <tag>Conda</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>科研论文写作技巧</title>
+    <url>/Phil-Mao/2022/03/08/%E7%A7%91%E7%A0%94%E8%AE%BA%E6%96%87%E5%86%99%E4%BD%9C%E6%8A%80%E5%B7%A7/</url>
+    <content><![CDATA[<h2 id="文献检索途径"><a href="#文献检索途径" class="headerlink" title="文献检索途径"></a>文献检索途径</h2><ol>
+<li>Google scholar</li>
+<li>Semantic scholar</li>
+<li>Github –Explore more &#x2F; 综述文献 awesome …</li>
+</ol>
+<ul>
+<li><p>Cited by 查看最新引用文献（通常引用五年之内的，十年内的不要引用太多，除非特别经典）</p>
+</li>
+<li><p>订阅 Google Scholar–Alerts 推送最新研究成果</p>
+</li>
+</ul>
+<h2 id="文献管理工具"><a href="#文献管理工具" class="headerlink" title="文献管理工具"></a>文献管理工具</h2><ol>
+<li><code>NoteExpress</code> 插入Word 有bug，跨平台同步功能效果不佳，自带样式不完美</li>
+<li><code>Zotero</code> 通常使用BibTeX格式，Zotero Connector插件直接导入文献，Zotero 文献同步到网页，结合One drive 保存在线文件–Attach link file；一般Elseiver格式，文章内的插入Citation，文末插入Bibliography，Ctrl+Shift+F9，清除底纹；会议论文信息补全，通过<code>dplp</code>检索到信息后，手动在<code>Zotero</code>完善信息。引文格式–Zotero Style Preview 搜索GB&#x2F;T *** 或者自定义模板格式 –Zotero Style Editor–CLS Editor<blockquote>
+<p><a href="https://editor.citationstyles.org/visualEditor/">https://editor.citationstyles.org/visualEditor/</a></p>
+</blockquote>
+</li>
+</ol>
+<h2 id="如何写论文"><a href="#如何写论文" class="headerlink" title="如何写论文"></a>如何写论文</h2><ol>
+<li><strong>Intorduction</strong> 分析还有什么问题未解决，放一个图大概知道是什么，接着提出什么方法，稍微解释方法，下一段总结contribution，一般两个，最后是论文章节安排</li>
+<li><strong>Related work</strong> 分小标题讲述，叙述过程时引入别人的工作，这些存在什么问题 Unfortunately …，Despite …，Although …</li>
+<li><strong>Methodology</strong> Overview画一个流程图，讲述流程中的内容，方法要做说明性的图，把论文思想阐述出来</li>
+<li><strong>Experimental Evaluation and analysis</strong> ……</li>
+</ol>
+<p>论文图至少15个图，3-5个表，写作论文并不只是依靠模板填充内容，真正高质量的论文还是需要大量的文献阅读来丰富自己的知识库及图片审美技巧。</p>
+<h2 id="Zotero及-Google-插件下载地址"><a href="#Zotero及-Google-插件下载地址" class="headerlink" title="Zotero及 Google 插件下载地址"></a>Zotero及 Google 插件下载地址</h2><p><a href="https://www.zotero.org/download/">https://www.zotero.org/download/</a></p>
+]]></content>
+      <categories>
+        <category>科研论文</category>
+      </categories>
+      <tags>
+        <tag>经验分享</tag>
+        <tag>论文写作</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>天绘二号卫星简介</title>
+    <url>/Phil-Mao/2022/03/08/%E5%A4%A9%E7%BB%98%E4%BA%8C%E5%8F%B7%E5%8D%AB%E6%98%9F%E7%AE%80%E4%BB%8B/</url>
+    <content><![CDATA[<p>本篇文章仅供学习，文中内容是笔者认为比较重要的部分，如有遗漏，欢迎批评指正！文章来源于</p>
+<blockquote>
+<p><a href="http://qikan.cqvip.com/Qikan/Article/ReadIndex?id=7103108740&info=0dMbeW/xaJvksQ44uA6wTkncKFsW0I7JXpLipUEi94/F9pbJ+UTHQA==">楼良盛,刘志铭,张昊等.天绘二号卫星工程设计与实现[J].测绘学报,2020,49(10):1252-1264.</a></p>
+</blockquote>
+<h1 id="绪论"><a href="#绪论" class="headerlink" title="绪论"></a>绪论</h1><p>天绘二号卫星系统是我国首个基于干涉合成孔径雷达技术的微波测绘卫星系统，也是我国<strong>第1个近距离编队卫星系统</strong>，在国际上首次提出通过设计<strong>双频成像</strong>解决干涉相位绝对模糊问题的方法，彻底摆脱了对地面控制数据的依赖。<br>天绘二号卫星于2019年4月30日成功发射，使我国拥有了实时获取全球InSAR影像的自主手段，摆脱了雷达遥感测绘数据长期依赖国外商业卫星的被动局面，标志着中国航天测绘事业迈上了新的台阶。</p>
+<h1 id="1-天绘二号卫星技术体制"><a href="#1-天绘二号卫星技术体制" class="headerlink" title="1. 天绘二号卫星技术体制"></a>1. 天绘二号卫星技术体制</h1><h2 id="1-1-干涉基线体制选择"><a href="#1-1-干涉基线体制选择" class="headerlink" title="1.1 干涉基线体制选择"></a>1.1 干涉基线体制选择</h2><p>InSAR 测绘卫星干涉基线的体制选择：</p>
+<ul>
+<li><strong>基于单卫星平台（或飞船、航天飞机）的双天线体制</strong> <strong>(eg: SRTM数据)</strong></li>
+</ul>
+<p><em>两个天线同时对地面成像，可解决时间导致的相干性下降问题</em><br>缺点–&gt;技术难度大、风险高、耗资巨大、天线存在颤抖，难以进行精确测量</p>
+<ul>
+<li><strong>基于卫星编队体制</strong></li>
+</ul>
+<p> <em>卫星之间遵循 Hill 方程绕飞，同时对地成像，无时间去相关效应</em></p>
+<h2 id="1-2-卫星编队构型选择"><a href="#1-2-卫星编队构型选择" class="headerlink" title="1.2 卫星编队构型选择"></a>1.2 卫星编队构型选择</h2><table>
+<thead>
+<tr>
+<th>绕飞模式（TH -2）</th>
+<th>跟飞模式</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>星距小</td>
+<td>星距大</td>
+</tr>
+<tr>
+<td>一发双收</td>
+<td>自发自收</td>
+</tr>
+<tr>
+<td>相干性好</td>
+<td>相干性下降</td>
+</tr>
+<tr>
+<td>同轨道面卫星：等长半轴、偏心率、轨道倾角和升交点赤经（碰撞隐患）</td>
+<td>–</td>
+</tr>
+<tr>
+<td>异轨道面卫星：轨道偏心率矢量差、倾角差、升交点赤经差</td>
+<td>–</td>
+</tr>
+</tbody></table>
+<h2 id="1-3-雷达收发模式选择"><a href="#1-3-雷达收发模式选择" class="headerlink" title="1.3 雷达收发模式选择"></a>1.3 雷达收发模式选择</h2><table>
+<thead>
+<tr>
+<th>多发多收</th>
+<th>自发自收</th>
+<th>一发多收</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>多个卫星发送，所有雷达接收多个信号</td>
+<td>各自发送，各自接收</td>
+<td>一个发送，所有雷达接收同一个信号</td>
+</tr>
+<tr>
+<td>无法判断回波信号</td>
+<td>两个回波可能不相干</td>
+<td>信号来源明确，消除时间干损对相干性影响</td>
+</tr>
+</tbody></table>
+<p>使用一发多收模式，要求 <strong>空间、时间、相位</strong> 三同步。</p>
+<h1 id="2-TH-2-工程设计"><a href="#2-TH-2-工程设计" class="headerlink" title="2. TH-2 工程设计"></a>2. TH-2 工程设计</h1><h2 id="2-1-系统性能及工作示意图"><a href="#2-1-系统性能及工作示意图" class="headerlink" title="2.1 系统性能及工作示意图"></a>2.1 系统性能及工作示意图</h2><p><img src="https://img-blog.csdnimg.cn/20210528170428949.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0JpdF9MZWc=,size_16,color_FFFFFF,t_70" alt="TH-2 工作示意图"></p>
+<p>系统组成：<br><img src="https://img-blog.csdnimg.cn/20210528171350116.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0JpdF9MZWc=,size_16,color_FFFFFF,t_70" alt="卫星InSAR成像工作流程"><br>地面数据流：</p>
+<p><img src="https://img-blog.csdnimg.cn/20210528171559773.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0JpdF9MZWc=,size_16,color_FFFFFF,t_70" alt="地面数据流"></p>
+<h1 id="2-2-…"><a href="#2-2-…" class="headerlink" title="2.2 …"></a>2.2 …</h1><h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p>TH-2 卫星系统采用双星异轨道面绕飞编队、一发双收干涉技术体制运行于500km高度的太阳同步轨道。TH-2 首个微波干涉测绘产品生产作业流程、技术规范及产品质量控制体系，还存在很多不足，在后期的生产过程中，还需不断改进完善……</p>
+]]></content>
+      <categories>
+        <category>行星测绘</category>
+      </categories>
+      <tags>
+        <tag>经验分享</tag>
+        <tag>卫星</tag>
+      </tags>
+  </entry>
+</search>
