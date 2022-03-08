@@ -2,7 +2,7 @@
 <search>
   <entry>
     <title>Qt开发小技巧</title>
-    <url>/Phil-Mao/2022/03/08/Qt%E5%BC%80%E5%8F%91%E5%B0%8F%E6%8A%80%E5%B7%A7/</url>
+    <url>/2022/03/08/Qt%E5%BC%80%E5%8F%91%E5%B0%8F%E6%8A%80%E5%B7%A7/</url>
     <content><![CDATA[<h2 id="Qt"><a href="#Qt" class="headerlink" title="Qt"></a>Qt</h2><ol>
 <li>遇到 Qt 报错<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">qt.qpa.plugin: Could not find the Qt platform plugin &quot;windows&quot; in &quot;&quot;</span><br><span class="line">This application failed to start because no Qt platform plugin could be initialized. Reinstalling the application may fix this problem.</span><br></pre></td></tr></table></figure></li>
 </ol>
@@ -22,7 +22,7 @@
   </entry>
   <entry>
     <title>Windows下配置Mingw64和MSYS2环境</title>
-    <url>/Phil-Mao/2022/03/08/Windows%E4%B8%8B%E9%85%8D%E7%BD%AEMingw64%E5%92%8CMSYS2%E7%8E%AF%E5%A2%83/</url>
+    <url>/2022/03/08/Windows%E4%B8%8B%E9%85%8D%E7%BD%AEMingw64%E5%92%8CMSYS2%E7%8E%AF%E5%A2%83/</url>
     <content><![CDATA[<h2 id="下载MSYS2"><a href="#下载MSYS2" class="headerlink" title="下载MSYS2"></a>下载MSYS2</h2><p>MSYS2是一组工具和库，提供一个易于使用的环境，用于构建、安装和运行本地 Windows 软件。下载地址：<a href="https://www.msys2.org/">MSYS2 latest 下载地址</a></p>
 <h2 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h2><p>官网有详细的安装步骤，这里不再赘述，参考<a href="https://www.msys2.org/">安装手册</a></p>
 <h2 id="更换国内镜像源"><a href="#更换国内镜像源" class="headerlink" title="更换国内镜像源"></a>更换国内镜像源</h2><p>在安装新包之前，建议把MSYS2使用的镜像源换成国内源。默认路径安装的话，需要修改的文件在 <code>C:\msys64\etc\pacman.d</code> 文件夹内，把<code>mirrorlist.clang32</code>、<code>mirrorlist.clang64</code> 等7个文件进行如下修改：<br><img src="https://img-blog.csdnimg.cn/cb5f817ca63c4a16b3dea6f87e44d50d.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBAQml0X0xlZw==,size_20,color_FFFFFF,t_70,g_se,x_16" alt="修改前"></p>
@@ -47,7 +47,7 @@
   </entry>
   <entry>
     <title>Linux下编译DCNv2</title>
-    <url>/Phil-Mao/2022/03/08/Linux%E4%B8%8B%E7%BC%96%E8%AF%91DCNv2/</url>
+    <url>/2022/03/08/Linux%E4%B8%8B%E7%BC%96%E8%AF%91DCNv2/</url>
     <content><![CDATA[<p>最近需要编译一下DCN这个网络，使用<code>conda</code> 管理依赖库是真的方便，需要的东西往里放，只要版本之间不冲突，对编译代码十分友好。</p>
 <h1 id="配置"><a href="#配置" class="headerlink" title="配置"></a>配置</h1><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">GPU：RTX 3080</span><br><span class="line">系统： Linux Mint 20.1 Cinnamon 4.8.6</span><br><span class="line">Cuda: 11.1</span><br><span class="line">Pytorch: 1.8.1</span><br></pre></td></tr></table></figure>
 <h1 id="运行环境"><a href="#运行环境" class="headerlink" title="运行环境"></a>运行环境</h1><p>根据需要的依赖库下载对应的conda环境，这里提供我自己使用的conda 环境下载地址，其实有很多依赖库是用不着的：<br><code>https://github.com/Phil-Mao/AnacondaRecipies/tree/master/_environments</code><br>Clone之后，创建一个conda环境：</p>
@@ -75,7 +75,7 @@
   </entry>
   <entry>
     <title>科研论文写作技巧</title>
-    <url>/Phil-Mao/2022/03/08/%E7%A7%91%E7%A0%94%E8%AE%BA%E6%96%87%E5%86%99%E4%BD%9C%E6%8A%80%E5%B7%A7/</url>
+    <url>/2022/03/08/%E7%A7%91%E7%A0%94%E8%AE%BA%E6%96%87%E5%86%99%E4%BD%9C%E6%8A%80%E5%B7%A7/</url>
     <content><![CDATA[<h2 id="文献检索途径"><a href="#文献检索途径" class="headerlink" title="文献检索途径"></a>文献检索途径</h2><ol>
 <li>Google scholar</li>
 <li>Semantic scholar</li>
@@ -113,7 +113,7 @@
   </entry>
   <entry>
     <title>天绘二号卫星简介</title>
-    <url>/Phil-Mao/2022/03/08/%E5%A4%A9%E7%BB%98%E4%BA%8C%E5%8F%B7%E5%8D%AB%E6%98%9F%E7%AE%80%E4%BB%8B/</url>
+    <url>/2022/03/08/%E5%A4%A9%E7%BB%98%E4%BA%8C%E5%8F%B7%E5%8D%AB%E6%98%9F%E7%AE%80%E4%BB%8B/</url>
     <content><![CDATA[<p>本篇文章仅供学习，文中内容是笔者认为比较重要的部分，如有遗漏，欢迎批评指正！文章来源于</p>
 <blockquote>
 <p><a href="http://qikan.cqvip.com/Qikan/Article/ReadIndex?id=7103108740&info=0dMbeW/xaJvksQ44uA6wTkncKFsW0I7JXpLipUEi94/F9pbJ+UTHQA==">楼良盛,刘志铭,张昊等.天绘二号卫星工程设计与实现[J].测绘学报,2020,49(10):1252-1264.</a></p>
