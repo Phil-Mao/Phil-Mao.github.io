@@ -1,6 +1,34 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>Linux下编译DCNv2</title>
+    <url>/2022/03/08/Linux%E4%B8%8B%E7%BC%96%E8%AF%91DCNv2/</url>
+    <content><![CDATA[<p>最近需要编译一下DCN这个网络，使用<code>conda</code> 管理依赖库是真的方便，需要的东西往里放，只要版本之间不冲突，对编译代码十分友好。</p>
+<h1 id="配置"><a href="#配置" class="headerlink" title="配置"></a>配置</h1><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">GPU：RTX 3080</span><br><span class="line">系统： Linux Mint 20.1 Cinnamon 4.8.6</span><br><span class="line">Cuda: 11.1</span><br><span class="line">Pytorch: 1.8.1</span><br></pre></td></tr></table></figure>
+<h1 id="运行环境"><a href="#运行环境" class="headerlink" title="运行环境"></a>运行环境</h1><p>根据需要的依赖库下载对应的conda环境，这里提供我自己使用的conda 环境下载地址，其实有很多依赖库是用不着的：<br><code>https://github.com/Phil-Mao/AnacondaRecipies/tree/master/_environments</code><br>Clone之后，创建一个conda环境：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">conda env create -n mvs -f _environments/mvs.fixed.yml</span><br></pre></td></tr></table></figure>
+<p>激活<code>mvs</code>环境，<code>conda activate mvs</code>:<br><img src="https://img-blog.csdnimg.cn/727d92022b3541bd9d52b998f174532a.png?x-oss-process=image/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBAQml0X0xlZw==,size_20,color_FFFFFF,t_70,g_se,x_16" alt="激活mvs"></p>
+<h1 id="DCNv2-latest"><a href="#DCNv2-latest" class="headerlink" title="DCNv2-latest"></a>DCNv2-latest</h1><p>这里我用的是一个比较新的版本：<br><a href="https://github.com/jinfagang/DCNv2_latest">https://github.com/jinfagang/DCNv2_latest</a></p>
+<h1 id="编译"><a href="#编译" class="headerlink" title="编译"></a>编译</h1><p>这里需要指定<code>cuda</code>对应版本安装的位置：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">set CUDA_HOME=/usr/local/cuda-11.1</span><br></pre></td></tr></table></figure>
+<p>一键编译：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">python setup.py build develop</span><br></pre></td></tr></table></figure>
+<p><img src="https://img-blog.csdnimg.cn/c6554a0bc99c4a0c94e2fb9e9de4880a.png" alt="compile"><br>编译成功：<br><img src="https://img-blog.csdnimg.cn/2e522537473c4acea0607e9bfdb3ae87.png?x-oss-process=image/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBAQml0X0xlZw==,size_20,color_FFFFFF,t_70,g_se,x_16" alt="end"><br>编译后生成的文件：<br><img src="https://img-blog.csdnimg.cn/786eb166867e464e9dc69963c0ec2d46.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBAQml0X0xlZw==,size_19,color_FFFFFF,t_70,g_se,x_16" alt="编译完成"><br>build完之后，目前只是在当前文件夹下有.so文件，现在我们需要把他装载到我们的环境里面，这里直接运行</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">python setup.py install</span><br></pre></td></tr></table></figure>
+<p>在当前的<code>conda</code>环境里进行第三方库的安装：<br><img src="https://img-blog.csdnimg.cn/050642bff12446f99a5d065898f52e96.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBAQml0X0xlZw==,size_20,color_FFFFFF,t_70,g_se,x_16" alt="安装到虚拟环境中"><br>可以看到编译好的<code>DCNv2</code>被安装在了 <code>conda</code> 环境下的包管理目录下，激活环境：<br><img src="https://img-blog.csdnimg.cn/13c6a6fb8fe54f87a3f5e1b27c2be010.png" alt="成功安装"><br>至此，<code>DCNv2</code>的编译和安装就已经完成了。</p>
+]]></content>
+      <categories>
+        <category>编程开发</category>
+      </categories>
+      <tags>
+        <tag>经验分享</tag>
+        <tag>Linux</tag>
+        <tag>C++</tag>
+        <tag>DCN</tag>
+        <tag>Conda</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Qt开发小技巧</title>
     <url>/2022/03/08/Qt%E5%BC%80%E5%8F%91%E5%B0%8F%E6%8A%80%E5%B7%A7/</url>
     <content><![CDATA[<h2 id="Qt"><a href="#Qt" class="headerlink" title="Qt"></a>Qt</h2><ol>
@@ -14,8 +42,8 @@
         <category>编程开发</category>
       </categories>
       <tags>
-        <tag>C++</tag>
         <tag>经验分享</tag>
+        <tag>C++</tag>
         <tag>Qt</tag>
         <tag>Visual Studio</tag>
       </tags>
@@ -46,68 +74,170 @@
       </tags>
   </entry>
   <entry>
-    <title>Linux下编译DCNv2</title>
-    <url>/2022/03/08/Linux%E4%B8%8B%E7%BC%96%E8%AF%91DCNv2/</url>
-    <content><![CDATA[<p>最近需要编译一下DCN这个网络，使用<code>conda</code> 管理依赖库是真的方便，需要的东西往里放，只要版本之间不冲突，对编译代码十分友好。</p>
-<h1 id="配置"><a href="#配置" class="headerlink" title="配置"></a>配置</h1><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">GPU：RTX 3080</span><br><span class="line">系统： Linux Mint 20.1 Cinnamon 4.8.6</span><br><span class="line">Cuda: 11.1</span><br><span class="line">Pytorch: 1.8.1</span><br></pre></td></tr></table></figure>
-<h1 id="运行环境"><a href="#运行环境" class="headerlink" title="运行环境"></a>运行环境</h1><p>根据需要的依赖库下载对应的conda环境，这里提供我自己使用的conda 环境下载地址，其实有很多依赖库是用不着的：<br><code>https://github.com/Phil-Mao/AnacondaRecipies/tree/master/_environments</code><br>Clone之后，创建一个conda环境：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">conda env create -n mvs -f _environments/mvs.fixed.yml</span><br></pre></td></tr></table></figure>
-<p>激活<code>mvs</code>环境，<code>conda activate mvs</code>:<br><img src="https://img-blog.csdnimg.cn/727d92022b3541bd9d52b998f174532a.png?x-oss-process=image/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBAQml0X0xlZw==,size_20,color_FFFFFF,t_70,g_se,x_16" alt="激活mvs"></p>
-<h1 id="DCNv2-latest"><a href="#DCNv2-latest" class="headerlink" title="DCNv2-latest"></a>DCNv2-latest</h1><p>这里我用的是一个比较新的版本：<br><a href="https://github.com/jinfagang/DCNv2_latest">https://github.com/jinfagang/DCNv2_latest</a></p>
-<h1 id="编译"><a href="#编译" class="headerlink" title="编译"></a>编译</h1><p>这里需要指定<code>cuda</code>对应版本安装的位置：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">set CUDA_HOME=/usr/local/cuda-11.1</span><br></pre></td></tr></table></figure>
-<p>一键编译：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">python setup.py build develop</span><br></pre></td></tr></table></figure>
-<p><img src="https://img-blog.csdnimg.cn/c6554a0bc99c4a0c94e2fb9e9de4880a.png" alt="compile"><br>编译成功：<br><img src="https://img-blog.csdnimg.cn/2e522537473c4acea0607e9bfdb3ae87.png?x-oss-process=image/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBAQml0X0xlZw==,size_20,color_FFFFFF,t_70,g_se,x_16" alt="end"><br>编译后生成的文件：<br><img src="https://img-blog.csdnimg.cn/786eb166867e464e9dc69963c0ec2d46.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBAQml0X0xlZw==,size_19,color_FFFFFF,t_70,g_se,x_16" alt="编译完成"><br>build完之后，目前只是在当前文件夹下有.so文件，现在我们需要把他装载到我们的环境里面，这里直接运行</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">python setup.py install</span><br></pre></td></tr></table></figure>
-<p>在当前的<code>conda</code>环境里进行第三方库的安装：<br><img src="https://img-blog.csdnimg.cn/050642bff12446f99a5d065898f52e96.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBAQml0X0xlZw==,size_20,color_FFFFFF,t_70,g_se,x_16" alt="安装到虚拟环境中"><br>可以看到编译好的<code>DCNv2</code>被安装在了 <code>conda</code> 环境下的包管理目录下，激活环境：<br><img src="https://img-blog.csdnimg.cn/13c6a6fb8fe54f87a3f5e1b27c2be010.png" alt="成功安装"><br>至此，<code>DCNv2</code>的编译和安装就已经完成了。</p>
-]]></content>
-      <categories>
-        <category>编程开发</category>
-      </categories>
-      <tags>
-        <tag>C++</tag>
-        <tag>经验分享</tag>
-        <tag>Linux</tag>
-        <tag>DCN</tag>
-        <tag>Conda</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>科研论文写作技巧</title>
-    <url>/2022/03/08/%E7%A7%91%E7%A0%94%E8%AE%BA%E6%96%87%E5%86%99%E4%BD%9C%E6%8A%80%E5%B7%A7/</url>
-    <content><![CDATA[<h2 id="文献检索途径"><a href="#文献检索途径" class="headerlink" title="文献检索途径"></a>文献检索途径</h2><ol>
-<li>Google scholar</li>
-<li>Semantic scholar</li>
-<li>Github –Explore more &#x2F; 综述文献 awesome …</li>
-</ol>
-<ul>
-<li><p>Cited by 查看最新引用文献（通常引用五年之内的，十年内的不要引用太多，除非特别经典）</p>
+    <title>Markdown基本用法</title>
+    <url>/2022/03/10/Markdown%E5%9F%BA%E6%9C%AC%E7%94%A8%E6%B3%95/</url>
+    <content><![CDATA[<!-- <script src="https://cdn.bootcdn.net/ajax/libs/mathjax/2.7.7/MathJax.js?config=TeX-MML-AM_CHTML"></script> -->
+<p>Markdown是一种轻量级的标记语言，可以用它来给纯文本文件添加格式化元素。</p>
+<h2 id="文本样式"><a href="#文本样式" class="headerlink" title="文本样式"></a>文本样式</h2><ul>
+<li>斜体<ul>
+<li>使用下划线(<code>_</code>)包裹文本，例如，<code>_斜体_</code>效果就是 <em>斜体</em></li>
+</ul>
 </li>
-<li><p>订阅 Google Scholar–Alerts 推送最新研究成果</p>
+<li>加粗<ul>
+<li>使用两个星号(<code>**</code>)或者两个下划线(<code>__</code>)包裹文本，例如，<code>**加粗**</code>效果就是 <strong>加粗</strong>，两个下划线<code>__加粗__</code>效果就是 <strong>加粗</strong></li>
+</ul>
+</li>
+<li>删除文本<ul>
+<li>使用两个波浪号(<code>~~</code>)包裹文本，例如，<code>~~删除文本~~</code>效果就是 <del>删除文本</del></li>
+</ul>
 </li>
 </ul>
-<h2 id="文献管理工具"><a href="#文献管理工具" class="headerlink" title="文献管理工具"></a>文献管理工具</h2><ol>
-<li><code>NoteExpress</code> 插入Word 有bug，跨平台同步功能效果不佳，自带样式不完美</li>
-<li><code>Zotero</code> 通常使用BibTeX格式，Zotero Connector插件直接导入文献，Zotero 文献同步到网页，结合One drive 保存在线文件–Attach link file；一般Elseiver格式，文章内的插入Citation，文末插入Bibliography，Ctrl+Shift+F9，清除底纹；会议论文信息补全，通过<code>dplp</code>检索到信息后，手动在<code>Zotero</code>完善信息。引文格式–Zotero Style Preview 搜索GB&#x2F;T *** 或者自定义模板格式 –Zotero Style Editor–CLS Editor<blockquote>
-<p><a href="https://editor.citationstyles.org/visualEditor/">https://editor.citationstyles.org/visualEditor/</a></p>
+<h2 id="标题"><a href="#标题" class="headerlink" title="标题"></a>标题</h2><ul>
+<li>一级标题<ul>
+<li>使用一个井号(<code>#</code>)，例如，<code># 一级标题</code><h1 id="一级标题"><a href="#一级标题" class="headerlink" title="一级标题"></a>一级标题</h1></li>
+</ul>
+</li>
+<li>二级标题，即使用两个井号，以此类推<ul>
+<li>使用两个井号(<code>##</code>)，例如，<code>## 二级标题</code><h2 id="二级标题"><a href="#二级标题" class="headerlink" title="二级标题"></a>二级标题</h2></li>
+</ul>
+</li>
+</ul>
+<h2 id="超链接"><a href="#超链接" class="headerlink" title="超链接"></a>超链接</h2><ul>
+<li>内联链接</li>
+</ul>
+<p>需要将被链接的文本用方括号(<code>[]</code>)包裹起来， 然后将链接地址用圆括号(<code>()</code>)包裹起来，例如，<code>[github](https://github.com/)</code>就是链接到 <a href="https://github.com/">github</a></p>
+<ul>
+<li>全局链接</li>
+</ul>
+<p>链接到文档的另外一个位置，例如链接到<a href="https://www.google.com/?hl=zh_CN">谷歌搜索</a></p>
+<h2 id="图片"><a href="#图片" class="headerlink" title="图片"></a>图片</h2><ul>
+<li>内联图片链接<ul>
+<li>创建一个内联的图片链接， 需要输入一个感叹号(<code>!</code>)将方括号(<code>[]</code>)中的描述性文本包裹起来， 然后使用圆括号(<code>()</code>)包裹链接地址。例如<code>![avatar](/images/apple-touch-icon.png)</code>，效果就是<img src="/images/apple-touch-icon.png" alt="avator"></li>
+</ul>
+</li>
+<li>全局图片链接<ul>
+<li>和<code>全局链接</code>相似，同样<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">![SWJTU_logo][swjtu]</span><br><span class="line">[swjtu]:https://www.swjtu.edu.cn/images/logob.png</span><br></pre></td></tr></table></figure></li>
+</ul>
+</li>
+</ul>
+<p>效果就是<img src="https://www.swjtu.edu.cn/images/logob.png" alt="SWJTU_logo"></p>
+<h2 id="引用块"><a href="#引用块" class="headerlink" title="引用块"></a>引用块</h2><ul>
+<li>在引用文本首行添加(<code>&lt;</code>)。例如<code>&gt;爱我所爱，行我所行，听从我心，无问西东</code>，效果就是 <blockquote>
+<p>爱我所爱，行我所行，听从我心，无问西东</p>
+</blockquote>
+</li>
+</ul>
+<h2 id="列表"><a href="#列表" class="headerlink" title="列表"></a>列表</h2><ul>
+<li>无序列表<ul>
+<li>在每一个列表项前加一个(<code>*</code>)或者短横线(<code>-</code>)或者加号(<code>+</code>),例如<code>- 短横线</code> <code>* 星号</code> <code>+ 加号</code>，效果就是</li>
+</ul>
+</li>
+<li>短横线<ul>
+<li>星号<ul>
+<li>加号</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<hr>
+<ul>
+<li>有序列表<ul>
+<li>在每一个列表项前加数字,例如<code>1. 第一项</code>,效果就是</li>
+</ul>
+</li>
+</ul>
+<ol>
+<li>第一项</li>
+<li>第二项  <blockquote>
+<p><strong>使用<code>Tab</code>键进行文本的缩进</strong></p>
 </blockquote>
 </li>
 </ol>
-<h2 id="如何写论文"><a href="#如何写论文" class="headerlink" title="如何写论文"></a>如何写论文</h2><ol>
-<li><strong>Intorduction</strong> 分析还有什么问题未解决，放一个图大概知道是什么，接着提出什么方法，稍微解释方法，下一段总结contribution，一般两个，最后是论文章节安排</li>
-<li><strong>Related work</strong> 分小标题讲述，叙述过程时引入别人的工作，这些存在什么问题 Unfortunately …，Despite …，Although …</li>
-<li><strong>Methodology</strong> Overview画一个流程图，讲述流程中的内容，方法要做说明性的图，把论文思想阐述出来</li>
-<li><strong>Experimental Evaluation and analysis</strong> ……</li>
-</ol>
-<p>论文图至少15个图，3-5个表，写作论文并不只是依靠模板填充内容，真正高质量的论文还是需要大量的文献阅读来丰富自己的知识库及图片审美技巧。</p>
-<h2 id="Zotero及-Google-插件下载地址"><a href="#Zotero及-Google-插件下载地址" class="headerlink" title="Zotero及 Google 插件下载地址"></a>Zotero及 Google 插件下载地址</h2><p><a href="https://www.zotero.org/download/">https://www.zotero.org/download/</a></p>
+<h2 id="段落"><a href="#段落" class="headerlink" title="段落"></a>段落</h2><ul>
+<li>使用两个连续空格进行分段，效果就是    <blockquote>
+<p>真正高明的人，<br>就是能够借助别人的智慧，<br>来使自己不受蒙蔽</p>
+</blockquote>
+</li>
+</ul>
+<h2 id="表格"><a href="#表格" class="headerlink" title="表格"></a>表格</h2><ul>
+<li><p>使用(<code>|</code>)进行表格内容划分，使用(<code>-</code>)来分隔表头和其他行，例如  </p>
+  <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">|  表头   | 表头  |</span><br><span class="line">|  ----  | ----  |</span><br><span class="line">| 单元格  | 单元格 |</span><br><span class="line">| 单元格  | 单元格 |</span><br></pre></td></tr></table></figure>
+<table>
+<thead>
+<tr>
+<th>表头</th>
+<th>表头</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>单元格</td>
+<td>单元格</td>
+</tr>
+<tr>
+<td>单元格</td>
+<td>单元格</td>
+</tr>
+</tbody></table>
+</li>
+<li><p>设置表格的对齐方式：</p>
+<ul>
+<li><code>-:</code>设置内容和标题栏居右对齐</li>
+<li><code>:-</code>设置内容和标题栏居左对齐</li>
+<li><code>:-:</code>设置内容和标题栏居中对齐</li>
+</ul>
+</li>
+</ul>
+<p>例如,</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">| 左对齐 | 右对齐 | 居中对齐 |</span><br><span class="line">| :-----| ----: | :----: |</span><br><span class="line">| 留守猿 | 王祥 | 马超 |</span><br><span class="line">| 阿理尬豆 | 李狗蛋 | 张晓松 |</span><br></pre></td></tr></table></figure>
+<table>
+<thead>
+<tr>
+<th align="left">左对齐</th>
+<th align="right">右对齐</th>
+<th align="center">居中对齐</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">留守猿</td>
+<td align="right">王祥</td>
+<td align="center">马超</td>
+</tr>
+<tr>
+<td align="left">阿理尬豆</td>
+<td align="right">李狗蛋</td>
+<td align="center">张晓松</td>
+</tr>
+</tbody></table>
+<h2 id="LaTeX数学公式"><a href="#LaTeX数学公式" class="headerlink" title="LaTeX数学公式"></a>LaTeX数学公式</h2><ul>
+<li>使用LaTeX数学公式，<a href="https://katex.org/docs/api.html">参考网址</a><br>Gamma公式展示<br><img src="/images/latex.png" alt="latex"></li>
+</ul>
+<h2 id="制图-Mermaid"><a href="#制图-Mermaid" class="headerlink" title="制图-Mermaid"></a>制图-Mermaid</h2><ul>
+<li>插入甘特图，<a href="https://mermaid-js.github.io/mermaid/#/gantt">参考网址</a></li>
+</ul>
+<p><img src="/images/gantt.png" alt="gantt"></p>
+<ul>
+<li>插入UML图，<a href="https://mermaid-js.github.io/mermaid/#/sequenceDiagram">参考网址</a></li>
+</ul>
+<p><img src="/images/uml.png" alt="uml"></p>
+<ul>
+<li>插入流程图，<a href="https://mermaid-js.github.io/mermaid/#/flowchart?id=graph">参考网址</a></li>
+</ul>
+<p><img src="/images/flowchart.png" alt="flowchart"></p>
+<ul>
+<li><p>插入Flowchart流程图，<a href="http://flowchart.js.org/">参考网址</a></p>
+</li>
+<li><p>插入classDiagram类图，<a href="https://mermaid-js.github.io/mermaid/#/classDiagram">参考网址</a></p>
+</li>
+</ul>
+<p><img src="/images/classDiagram.png" alt="classDiagram"></p>
 ]]></content>
       <categories>
-        <category>科研论文</category>
+        <category>常用工具</category>
       </categories>
       <tags>
         <tag>经验分享</tag>
+        <tag>Markdown</tag>
         <tag>论文写作</tag>
       </tags>
   </entry>
@@ -187,6 +317,44 @@
       <tags>
         <tag>经验分享</tag>
         <tag>卫星</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>科研论文写作技巧</title>
+    <url>/2022/03/08/%E7%A7%91%E7%A0%94%E8%AE%BA%E6%96%87%E5%86%99%E4%BD%9C%E6%8A%80%E5%B7%A7/</url>
+    <content><![CDATA[<h2 id="文献检索途径"><a href="#文献检索途径" class="headerlink" title="文献检索途径"></a>文献检索途径</h2><ol>
+<li>Google scholar</li>
+<li>Semantic scholar</li>
+<li>Github –Explore more &#x2F; 综述文献 awesome …</li>
+</ol>
+<ul>
+<li><p>Cited by 查看最新引用文献（通常引用五年之内的，十年内的不要引用太多，除非特别经典）</p>
+</li>
+<li><p>订阅 Google Scholar–Alerts 推送最新研究成果</p>
+</li>
+</ul>
+<h2 id="文献管理工具"><a href="#文献管理工具" class="headerlink" title="文献管理工具"></a>文献管理工具</h2><ol>
+<li><code>NoteExpress</code> 插入Word 有bug，跨平台同步功能效果不佳，自带样式不完美</li>
+<li><code>Zotero</code> 通常使用BibTeX格式，Zotero Connector插件直接导入文献，Zotero 文献同步到网页，结合One drive 保存在线文件–Attach link file；一般Elseiver格式，文章内的插入Citation，文末插入Bibliography，Ctrl+Shift+F9，清除底纹；会议论文信息补全，通过<code>dplp</code>检索到信息后，手动在<code>Zotero</code>完善信息。引文格式–Zotero Style Preview 搜索GB&#x2F;T *** 或者自定义模板格式 –Zotero Style Editor–CLS Editor<blockquote>
+<p><a href="https://editor.citationstyles.org/visualEditor/">https://editor.citationstyles.org/visualEditor/</a></p>
+</blockquote>
+</li>
+</ol>
+<h2 id="如何写论文"><a href="#如何写论文" class="headerlink" title="如何写论文"></a>如何写论文</h2><ol>
+<li><strong>Intorduction</strong> 分析还有什么问题未解决，放一个图大概知道是什么，接着提出什么方法，稍微解释方法，下一段总结contribution，一般两个，最后是论文章节安排</li>
+<li><strong>Related work</strong> 分小标题讲述，叙述过程时引入别人的工作，这些存在什么问题 Unfortunately …，Despite …，Although …</li>
+<li><strong>Methodology</strong> Overview画一个流程图，讲述流程中的内容，方法要做说明性的图，把论文思想阐述出来</li>
+<li><strong>Experimental Evaluation and analysis</strong> ……</li>
+</ol>
+<p>论文图至少15个图，3-5个表，写作论文并不只是依靠模板填充内容，真正高质量的论文还是需要大量的文献阅读来丰富自己的知识库及图片审美技巧。</p>
+<h2 id="Zotero及-Google-插件下载地址"><a href="#Zotero及-Google-插件下载地址" class="headerlink" title="Zotero及 Google 插件下载地址"></a>Zotero及 Google 插件下载地址</h2><p><a href="https://www.zotero.org/download/">https://www.zotero.org/download/</a></p>
+]]></content>
+      <categories>
+        <category>科研论文</category>
+      </categories>
+      <tags>
+        <tag>经验分享</tag>
+        <tag>论文写作</tag>
       </tags>
   </entry>
 </search>
