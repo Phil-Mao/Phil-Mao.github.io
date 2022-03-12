@@ -1,79 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
-    <title>Linux下编译DCNv2</title>
-    <url>/2022/03/08/Linux%E4%B8%8B%E7%BC%96%E8%AF%91DCNv2/</url>
-    <content><![CDATA[<p>最近需要编译一下DCN这个网络，使用<code>conda</code> 管理依赖库是真的方便，需要的东西往里放，只要版本之间不冲突，对编译代码十分友好。</p>
-<h1 id="配置"><a href="#配置" class="headerlink" title="配置"></a>配置</h1><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">GPU：RTX 3080</span><br><span class="line">系统： Linux Mint 20.1 Cinnamon 4.8.6</span><br><span class="line">Cuda: 11.1</span><br><span class="line">Pytorch: 1.8.1</span><br></pre></td></tr></table></figure>
-<h1 id="运行环境"><a href="#运行环境" class="headerlink" title="运行环境"></a>运行环境</h1><p>根据需要的依赖库下载对应的conda环境，这里提供我自己使用的conda 环境下载地址，其实有很多依赖库是用不着的：<br><code>https://github.com/Phil-Mao/AnacondaRecipies/tree/master/_environments</code><br>Clone之后，创建一个conda环境：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">conda env create -n mvs -f _environments/mvs.fixed.yml</span><br></pre></td></tr></table></figure>
-<p>激活<code>mvs</code>环境，<code>conda activate mvs</code>:<br><img src="https://img-blog.csdnimg.cn/727d92022b3541bd9d52b998f174532a.png?x-oss-process=image/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBAQml0X0xlZw==,size_20,color_FFFFFF,t_70,g_se,x_16" alt="激活mvs"></p>
-<h1 id="DCNv2-latest"><a href="#DCNv2-latest" class="headerlink" title="DCNv2-latest"></a>DCNv2-latest</h1><p>这里我用的是一个比较新的版本：<br><a href="https://github.com/jinfagang/DCNv2_latest">https://github.com/jinfagang/DCNv2_latest</a></p>
-<h1 id="编译"><a href="#编译" class="headerlink" title="编译"></a>编译</h1><p>这里需要指定<code>cuda</code>对应版本安装的位置：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">set CUDA_HOME=/usr/local/cuda-11.1</span><br></pre></td></tr></table></figure>
-<p>一键编译：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">python setup.py build develop</span><br></pre></td></tr></table></figure>
-<p><img src="https://img-blog.csdnimg.cn/c6554a0bc99c4a0c94e2fb9e9de4880a.png" alt="compile"><br>编译成功：<br><img src="https://img-blog.csdnimg.cn/2e522537473c4acea0607e9bfdb3ae87.png?x-oss-process=image/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBAQml0X0xlZw==,size_20,color_FFFFFF,t_70,g_se,x_16" alt="end"><br>编译后生成的文件：<br><img src="https://img-blog.csdnimg.cn/786eb166867e464e9dc69963c0ec2d46.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBAQml0X0xlZw==,size_19,color_FFFFFF,t_70,g_se,x_16" alt="编译完成"><br>build完之后，目前只是在当前文件夹下有.so文件，现在我们需要把他装载到我们的环境里面，这里直接运行</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">python setup.py install</span><br></pre></td></tr></table></figure>
-<p>在当前的<code>conda</code>环境里进行第三方库的安装：<br><img src="https://img-blog.csdnimg.cn/050642bff12446f99a5d065898f52e96.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBAQml0X0xlZw==,size_20,color_FFFFFF,t_70,g_se,x_16" alt="安装到虚拟环境中"><br>可以看到编译好的<code>DCNv2</code>被安装在了 <code>conda</code> 环境下的包管理目录下，激活环境：<br><img src="https://img-blog.csdnimg.cn/13c6a6fb8fe54f87a3f5e1b27c2be010.png" alt="成功安装"><br>至此，<code>DCNv2</code>的编译和安装就已经完成了。</p>
-]]></content>
-      <categories>
-        <category>编程开发</category>
-      </categories>
-      <tags>
-        <tag>经验分享</tag>
-        <tag>Linux</tag>
-        <tag>C++</tag>
-        <tag>DCN</tag>
-        <tag>Conda</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Qt开发小技巧</title>
-    <url>/2022/03/08/Qt%E5%BC%80%E5%8F%91%E5%B0%8F%E6%8A%80%E5%B7%A7/</url>
-    <content><![CDATA[<h2 id="Qt"><a href="#Qt" class="headerlink" title="Qt"></a>Qt</h2><ol>
-<li>遇到 Qt 报错<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">qt.qpa.plugin: Could not find the Qt platform plugin &quot;windows&quot; in &quot;&quot;</span><br><span class="line">This application failed to start because no Qt platform plugin could be initialized. Reinstalling the application may fix this problem.</span><br></pre></td></tr></table></figure></li>
-</ol>
-<p>使用 qt 自带的<code>windeployqt.exe</code> 重新运行一下可执行文件，就OK 啦！</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">windeployqt ./$APP_NAME.exe</span><br></pre></td></tr></table></figure>
-<p>重新初始化一些qt的依赖库和显示窗口，就完事了。</p>
-]]></content>
-      <categories>
-        <category>编程开发</category>
-      </categories>
-      <tags>
-        <tag>经验分享</tag>
-        <tag>C++</tag>
-        <tag>Qt</tag>
-        <tag>Visual Studio</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Windows下配置Mingw64和MSYS2环境</title>
-    <url>/2022/03/08/Windows%E4%B8%8B%E9%85%8D%E7%BD%AEMingw64%E5%92%8CMSYS2%E7%8E%AF%E5%A2%83/</url>
-    <content><![CDATA[<h2 id="下载MSYS2"><a href="#下载MSYS2" class="headerlink" title="下载MSYS2"></a>下载MSYS2</h2><p>MSYS2是一组工具和库，提供一个易于使用的环境，用于构建、安装和运行本地 Windows 软件。下载地址：<a href="https://www.msys2.org/">MSYS2 latest 下载地址</a></p>
-<h2 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h2><p>官网有详细的安装步骤，这里不再赘述，参考<a href="https://www.msys2.org/">安装手册</a></p>
-<h2 id="更换国内镜像源"><a href="#更换国内镜像源" class="headerlink" title="更换国内镜像源"></a>更换国内镜像源</h2><p>在安装新包之前，建议把MSYS2使用的镜像源换成国内源。默认路径安装的话，需要修改的文件在 <code>C:\msys64\etc\pacman.d</code> 文件夹内，把<code>mirrorlist.clang32</code>、<code>mirrorlist.clang64</code> 等7个文件进行如下修改：<br><img src="https://img-blog.csdnimg.cn/cb5f817ca63c4a16b3dea6f87e44d50d.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBAQml0X0xlZw==,size_20,color_FFFFFF,t_70,g_se,x_16" alt="修改前"></p>
-<p><img src="https://img-blog.csdnimg.cn/e716e870e2c04e9e9f389651f9ba8763.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBAQml0X0xlZw==,size_20,color_FFFFFF,t_70,g_se,x_16" alt="修改后"></p>
-<h2 id="安装新库"><a href="#安装新库" class="headerlink" title="安装新库"></a>安装新库</h2><p>接着就是按照编译的需要，安装相应的库文件</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">@REM Make sure start with ucrt64 msys2 environment</span><br><span class="line">pacman -Syu </span><br><span class="line">pacman -S mingw-w64-ucrt-x86_64-cmake --needed</span><br></pre></td></tr></table></figure>
-
-<p>安装新包时，选择带<code>ucrt</code>的包进行安装</p>
-<blockquote>
-<p>ucrt64：Visual Studio的新宠，全名是Universal C Runtime，用来替代前面mingw64&amp;w32里的msvcrt。ucrt不支持加载msvcrt的产物，因此老版本Windows（&lt;10）不能直接兼容基于它的软件。但是这不是无理由的激进，要知道msvcrt在当前开发环境里真的是让开发打哑谜，（原生）不支持C99，不支持UTF8</p>
-</blockquote>
-]]></content>
-      <categories>
-        <category>编程开发</category>
-      </categories>
-      <tags>
-        <tag>经验分享</tag>
-        <tag>Windows</tag>
-        <tag>Mingw</tag>
-        <tag>MSYS2</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>Markdown基本用法</title>
     <url>/2022/03/10/Markdown%E5%9F%BA%E6%9C%AC%E7%94%A8%E6%B3%95/</url>
     <content><![CDATA[<!-- <script src="https://cdn.bootcdn.net/ajax/libs/mathjax/2.7.7/MathJax.js?config=TeX-MML-AM_CHTML"></script> -->
@@ -239,6 +166,79 @@
         <tag>经验分享</tag>
         <tag>Markdown</tag>
         <tag>论文写作</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Linux下编译DCNv2</title>
+    <url>/2022/03/08/Linux%E4%B8%8B%E7%BC%96%E8%AF%91DCNv2/</url>
+    <content><![CDATA[<p>最近需要编译一下DCN这个网络，使用<code>conda</code> 管理依赖库是真的方便，需要的东西往里放，只要版本之间不冲突，对编译代码十分友好。</p>
+<h1 id="配置"><a href="#配置" class="headerlink" title="配置"></a>配置</h1><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">GPU：RTX 3080</span><br><span class="line">系统： Linux Mint 20.1 Cinnamon 4.8.6</span><br><span class="line">Cuda: 11.1</span><br><span class="line">Pytorch: 1.8.1</span><br></pre></td></tr></table></figure>
+<h1 id="运行环境"><a href="#运行环境" class="headerlink" title="运行环境"></a>运行环境</h1><p>根据需要的依赖库下载对应的conda环境，这里提供我自己使用的conda 环境下载地址，其实有很多依赖库是用不着的：<br><code>https://github.com/Phil-Mao/AnacondaRecipies/tree/master/_environments</code><br>Clone之后，创建一个conda环境：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">conda env create -n mvs -f _environments/mvs.fixed.yml</span><br></pre></td></tr></table></figure>
+<p>激活<code>mvs</code>环境，<code>conda activate mvs</code>:<br><img src="https://img-blog.csdnimg.cn/727d92022b3541bd9d52b998f174532a.png?x-oss-process=image/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBAQml0X0xlZw==,size_20,color_FFFFFF,t_70,g_se,x_16" alt="激活mvs"></p>
+<h1 id="DCNv2-latest"><a href="#DCNv2-latest" class="headerlink" title="DCNv2-latest"></a>DCNv2-latest</h1><p>这里我用的是一个比较新的版本：<br><a href="https://github.com/jinfagang/DCNv2_latest">https://github.com/jinfagang/DCNv2_latest</a></p>
+<h1 id="编译"><a href="#编译" class="headerlink" title="编译"></a>编译</h1><p>这里需要指定<code>cuda</code>对应版本安装的位置：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">set CUDA_HOME=/usr/local/cuda-11.1</span><br></pre></td></tr></table></figure>
+<p>一键编译：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">python setup.py build develop</span><br></pre></td></tr></table></figure>
+<p><img src="https://img-blog.csdnimg.cn/c6554a0bc99c4a0c94e2fb9e9de4880a.png" alt="compile"><br>编译成功：<br><img src="https://img-blog.csdnimg.cn/2e522537473c4acea0607e9bfdb3ae87.png?x-oss-process=image/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBAQml0X0xlZw==,size_20,color_FFFFFF,t_70,g_se,x_16" alt="end"><br>编译后生成的文件：<br><img src="https://img-blog.csdnimg.cn/786eb166867e464e9dc69963c0ec2d46.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBAQml0X0xlZw==,size_19,color_FFFFFF,t_70,g_se,x_16" alt="编译完成"><br>build完之后，目前只是在当前文件夹下有.so文件，现在我们需要把他装载到我们的环境里面，这里直接运行</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">python setup.py install</span><br></pre></td></tr></table></figure>
+<p>在当前的<code>conda</code>环境里进行第三方库的安装：<br><img src="https://img-blog.csdnimg.cn/050642bff12446f99a5d065898f52e96.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBAQml0X0xlZw==,size_20,color_FFFFFF,t_70,g_se,x_16" alt="安装到虚拟环境中"><br>可以看到编译好的<code>DCNv2</code>被安装在了 <code>conda</code> 环境下的包管理目录下，激活环境：<br><img src="https://img-blog.csdnimg.cn/13c6a6fb8fe54f87a3f5e1b27c2be010.png" alt="成功安装"><br>至此，<code>DCNv2</code>的编译和安装就已经完成了。</p>
+]]></content>
+      <categories>
+        <category>编程开发</category>
+      </categories>
+      <tags>
+        <tag>经验分享</tag>
+        <tag>Linux</tag>
+        <tag>C++</tag>
+        <tag>DCN</tag>
+        <tag>Conda</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Windows下配置Mingw64和MSYS2环境</title>
+    <url>/2022/03/08/Windows%E4%B8%8B%E9%85%8D%E7%BD%AEMingw64%E5%92%8CMSYS2%E7%8E%AF%E5%A2%83/</url>
+    <content><![CDATA[<h2 id="下载MSYS2"><a href="#下载MSYS2" class="headerlink" title="下载MSYS2"></a>下载MSYS2</h2><p>MSYS2是一组工具和库，提供一个易于使用的环境，用于构建、安装和运行本地 Windows 软件。下载地址：<a href="https://www.msys2.org/">MSYS2 latest 下载地址</a></p>
+<h2 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h2><p>官网有详细的安装步骤，这里不再赘述，参考<a href="https://www.msys2.org/">安装手册</a></p>
+<h2 id="更换国内镜像源"><a href="#更换国内镜像源" class="headerlink" title="更换国内镜像源"></a>更换国内镜像源</h2><p>在安装新包之前，建议把MSYS2使用的镜像源换成国内源。默认路径安装的话，需要修改的文件在 <code>C:\msys64\etc\pacman.d</code> 文件夹内，把<code>mirrorlist.clang32</code>、<code>mirrorlist.clang64</code> 等7个文件进行如下修改：<br><img src="https://img-blog.csdnimg.cn/cb5f817ca63c4a16b3dea6f87e44d50d.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBAQml0X0xlZw==,size_20,color_FFFFFF,t_70,g_se,x_16" alt="修改前"></p>
+<p><img src="https://img-blog.csdnimg.cn/e716e870e2c04e9e9f389651f9ba8763.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBAQml0X0xlZw==,size_20,color_FFFFFF,t_70,g_se,x_16" alt="修改后"></p>
+<h2 id="安装新库"><a href="#安装新库" class="headerlink" title="安装新库"></a>安装新库</h2><p>接着就是按照编译的需要，安装相应的库文件</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">@REM Make sure start with ucrt64 msys2 environment</span><br><span class="line">pacman -Syu </span><br><span class="line">pacman -S mingw-w64-ucrt-x86_64-cmake --needed</span><br></pre></td></tr></table></figure>
+
+<p>安装新包时，选择带<code>ucrt</code>的包进行安装</p>
+<blockquote>
+<p>ucrt64：Visual Studio的新宠，全名是Universal C Runtime，用来替代前面mingw64&amp;w32里的msvcrt。ucrt不支持加载msvcrt的产物，因此老版本Windows（&lt;10）不能直接兼容基于它的软件。但是这不是无理由的激进，要知道msvcrt在当前开发环境里真的是让开发打哑谜，（原生）不支持C99，不支持UTF8</p>
+</blockquote>
+]]></content>
+      <categories>
+        <category>编程开发</category>
+      </categories>
+      <tags>
+        <tag>经验分享</tag>
+        <tag>Windows</tag>
+        <tag>Mingw</tag>
+        <tag>MSYS2</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Qt开发小技巧</title>
+    <url>/2022/03/08/Qt%E5%BC%80%E5%8F%91%E5%B0%8F%E6%8A%80%E5%B7%A7/</url>
+    <content><![CDATA[<h2 id="Qt"><a href="#Qt" class="headerlink" title="Qt"></a>Qt</h2><ol>
+<li>遇到 Qt 报错<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">qt.qpa.plugin: Could not find the Qt platform plugin &quot;windows&quot; in &quot;&quot;</span><br><span class="line">This application failed to start because no Qt platform plugin could be initialized. Reinstalling the application may fix this problem.</span><br></pre></td></tr></table></figure></li>
+</ol>
+<p>使用 qt 自带的<code>windeployqt.exe</code> 重新运行一下可执行文件，就OK 啦！</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">windeployqt ./$APP_NAME.exe</span><br></pre></td></tr></table></figure>
+<p>重新初始化一些qt的依赖库和显示窗口，就完事了。</p>
+]]></content>
+      <categories>
+        <category>编程开发</category>
+      </categories>
+      <tags>
+        <tag>经验分享</tag>
+        <tag>C++</tag>
+        <tag>Qt</tag>
+        <tag>Visual Studio</tag>
       </tags>
   </entry>
   <entry>
