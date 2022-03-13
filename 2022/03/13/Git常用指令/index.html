@@ -22,23 +22,21 @@
     var CONFIG = {"hostname":"phil-mao.github.io","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","width":300,"display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
-  <meta name="description" content="利用Visual Studio进行C++和Qt开发时遇到的一些错误">
+  <meta name="description" content="Git是目前世界上最先进的分布式版本控制系统">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Qt开发小技巧">
-<meta property="og:url" content="https://phil-mao.github.io/2022/03/08/Qt%E5%BC%80%E5%8F%91%E5%B0%8F%E6%8A%80%E5%B7%A7/index.html">
+<meta property="og:title" content="Git常用指令">
+<meta property="og:url" content="https://phil-mao.github.io/2022/03/13/Git%E5%B8%B8%E7%94%A8%E6%8C%87%E4%BB%A4/index.html">
 <meta property="og:site_name" content="Phil-Mao">
-<meta property="og:description" content="利用Visual Studio进行C++和Qt开发时遇到的一些错误">
+<meta property="og:description" content="Git是目前世界上最先进的分布式版本控制系统">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2022-03-08T05:26:50.000Z">
-<meta property="article:modified_time" content="2022-03-08T05:27:10.776Z">
+<meta property="article:published_time" content="2022-03-13T07:02:27.000Z">
+<meta property="article:modified_time" content="2022-03-13T08:42:57.134Z">
 <meta property="article:author" content="Phil-Mao">
 <meta property="article:tag" content="经验分享">
-<meta property="article:tag" content="C++">
-<meta property="article:tag" content="Qt">
-<meta property="article:tag" content="Visual Studio">
+<meta property="article:tag" content="Git">
 <meta name="twitter:card" content="summary">
 
-<link rel="canonical" href="https://phil-mao.github.io/2022/03/08/Qt%E5%BC%80%E5%8F%91%E5%B0%8F%E6%8A%80%E5%B7%A7/">
+<link rel="canonical" href="https://phil-mao.github.io/2022/03/13/Git%E5%B8%B8%E7%94%A8%E6%8C%87%E4%BB%A4/">
 
 
 <script id="page-configurations">
@@ -51,7 +49,7 @@
   };
 </script>
 
-  <title>Qt开发小技巧 | Phil-Mao</title>
+  <title>Git常用指令 | Phil-Mao</title>
   
 
 
@@ -202,7 +200,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://phil-mao.github.io/2022/03/08/Qt%E5%BC%80%E5%8F%91%E5%B0%8F%E6%8A%80%E5%B7%A7/">
+    <link itemprop="mainEntityOfPage" href="https://phil-mao.github.io/2022/03/13/Git%E5%B8%B8%E7%94%A8%E6%8C%87%E4%BB%A4/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/apple-touch-icon.png">
@@ -215,7 +213,7 @@
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          Qt开发小技巧
+          Git常用指令
         </h1>
 
         <div class="post-meta">
@@ -226,7 +224,7 @@
               <span class="post-meta-item-text">发表于</span>
               
 
-              <time title="创建时间：2022-03-08 13:26:50 / 修改时间：13:27:10" itemprop="dateCreated datePublished" datetime="2022-03-08T13:26:50+08:00">2022-03-08</time>
+              <time title="创建时间：2022-03-13 15:02:27 / 修改时间：16:42:57" itemprop="dateCreated datePublished" datetime="2022-03-13T15:02:27+08:00">2022-03-13</time>
             </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -246,7 +244,7 @@
               <span class="post-meta-item-text">阅读次数：</span>
               <span id="busuanzi_value_page_pv"></span>
             </span>
-            <div class="post-description">利用Visual Studio进行C++和Qt开发时遇到的一些错误</div>
+            <div class="post-description">Git是目前世界上最先进的分布式版本控制系统</div>
 
         </div>
       </header>
@@ -257,12 +255,73 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <h2 id="Qt"><a href="#Qt" class="headerlink" title="Qt"></a>Qt</h2><ol>
-<li>遇到 Qt 报错<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">qt.qpa.plugin: Could not find the Qt platform plugin &quot;windows&quot; in &quot;&quot;</span><br><span class="line">This application failed to start because no Qt platform plugin could be initialized. Reinstalling the application may fix this problem.</span><br></pre></td></tr></table></figure></li>
-</ol>
-<p>使用 qt 自带的<code>windeployqt.exe</code> 重新运行一下可执行文件，就OK 啦！</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">windeployqt ./$APP_NAME.exe</span><br></pre></td></tr></table></figure>
-<p>重新初始化一些qt的依赖库和显示窗口，就完事了。</p>
+        <p>git常用指令集合</p>
+<h3 id="GIT-BASICS"><a href="#GIT-BASICS" class="headerlink" title="GIT BASICS"></a>GIT BASICS</h3><ul>
+<li><strong>git init</strong><br>在指定的⽬录下创建⼀个空的git repo。不带参数将在当前⽬录下创建⼀个git repo。</li>
+<li><strong>git clone <repo></strong><br>克隆⼀个指定repo到本地。指定的repo可以是本地⽂件系统或者由HTTP或SSH指定的远程路径。</li>
+<li><strong>git config user.name <code>&lt;name&gt;</code></strong><br>针对当前repo配置⽤户名。使⽤–global参数将配置全局⽤户名。</li>
+<li><strong>git add <code>&lt;directory&gt;</code></strong><br>将指定⽬录的所有修改加⼊到下⼀次commit中。把<code>&lt;directory&gt;</code>替换成<code>&lt;file&gt;</code>将添加指定⽂件的修改。</li>
+<li><strong>git commit -m <code>&quot;&lt;message&gt;&quot;</code></strong><br>提交暂存区的修改，使⽤指定的<code>&lt;message&gt;</code>作为提交信息，⽽不是打开⽂本编辑器输⼊提交信息。</li>
+<li><strong>git status</strong><br>显示哪些⽂件已被staged、未被staged以及未跟踪(untracked)。</li>
+<li><strong>git log</strong><br>以缺省格式显示全部commit历史。更多⾃定义参数请参考后续部分。键盘<code>q</code>退出。</li>
+</ul>
+<h3 id="GIT-DIFF"><a href="#GIT-DIFF" class="headerlink" title="GIT DIFF"></a>GIT DIFF</h3><ul>
+<li><strong>git diff</strong><br>⽐较⼯作区和暂存区的修改。</li>
+<li><strong>git diff HEAD</strong><br>⽐较⼯作区和上⼀次commit后的修改。</li>
+<li><strong>git diff –cached</strong><br>⽐较暂存区和上⼀次commit后的修改。</li>
+</ul>
+<h3 id="UNDOING-CHANGES"><a href="#UNDOING-CHANGES" class="headerlink" title="UNDOING CHANGES"></a>UNDOING CHANGES</h3><ul>
+<li><strong>git revert <code>&lt;commit&gt;</code></strong><br>对指定<code>&lt;commit&gt;</code>创建的一个undo的commit，并应用到当前分支</li>
+<li><strong>git reset <code>&lt;file&gt;</code></strong><br>将<code>&lt;file&gt;</code>从暂存区移除，但保持工作区不变。此操作不会修改工作区的任何文件。</li>
+</ul>
+<h3 id="REWRITING-GIT-HISTORY"><a href="#REWRITING-GIT-HISTORY" class="headerlink" title="REWRITING GIT HISTORY"></a>REWRITING GIT HISTORY</h3><ul>
+<li><strong>git oommit -m <code>&lt;message&gt;</code> –amend</strong><br>将当前staged修改合并到最近一次的commit中。</li>
+<li><strong>git rebase <code>&lt;base&gt;</code></strong><br>基于<code>&lt;base&gt;</code>对当前分支进行rebase。<code>&lt;base&gt;</code>可以是commit、分支名称、tag或相对于HEAD的commit.</li>
+<li><strong>git reflog</strong><br>显示本地repo的所有commit日志。</li>
+</ul>
+<h3 id="GIT-BRANCHES"><a href="#GIT-BRANCHES" class="headerlink" title="GIT BRANCHES"></a>GIT BRANCHES</h3><ul>
+<li><strong>git branch</strong><br>显示本地repo的所有分支</li>
+<li><strong>git switch -c <code>&lt;branch&gt;</code></strong><br>创建并切换到一个新的名为<code>&lt;branch&gt;</code>的分支。去掉参数-c将切换到一个已有的分支。</li>
+<li><strong>git merge <code>&lt;branch&gt;</code></strong><br>将指定<code>&lt;branch&gt;</code>分⽀合并到当前分⽀。</li>
+</ul>
+<h3 id="REMOTE-REPOSITORIES"><a href="#REMOTE-REPOSITORIES" class="headerlink" title="REMOTE REPOSITORIES"></a>REMOTE REPOSITORIES</h3><ul>
+<li><strong>git remote add <code>&lt;name&gt;</code> <code>&lt;url&gt;</code></strong><br>添加一个新的远程连接。添加后可以使用<code>&lt;name&gt;</code>作为指定<code>&lt;url&gt;</code>远程连接的名称。</li>
+<li><strong>git fetch <code>&lt;remote&gt;</code> <code>&lt;branch&gt;</code></strong><br>从指定<code>&lt;remote&gt;</code>抓取指定<code>&lt;branch&gt;</code>的所有commit到本地repo。去掉<code>&lt;branch&gt;</code>将抓取远程所有分⽀的修改。</li>
+<li><strong>git pull <code>&lt;remote&gt;</code></strong><br>从指定<code>&lt;remote&gt;</code>抓取所有分支的commit并立刻合并到本地repo。</li>
+<li><strong>git push <code>&lt;remote&gt;</code> <code>&lt;branch&gt;</code></strong><br>将本地指定<code>&lt;branch&gt;</code>推送到指定远程<code>&lt;remote&gt;</code>。如果远程没有对应的分⽀，将⾃动在远程创建此分⽀。</li>
+</ul>
+<h3 id="GIT-CONFIG"><a href="#GIT-CONFIG" class="headerlink" title="GIT CONFIG"></a>GIT CONFIG</h3><ul>
+<li><strong>git config –global user.name <code>&lt;name&gt;</code></strong><br>配置当前⽤户名，使⽤–global参数将针对当前系统登录⽤户⽣效。</li>
+<li><strong>git config –global user.email <code>&lt;email&gt;</code></strong><br>配置当前⽤户Email。</li>
+<li><strong>git config –global alias. <code>&lt;alias-name&gt;</code> <code>&lt;git-command&gt;</code></strong><br>配置⼀个git命令的快捷⽅式。例如：配置”alias.glog log –graph –oneline”使”git glog”相当于”git log –graph –oneline”。</li>
+<li><strong>git config –system core.editor <code>&lt;editor&gt;</code></strong><br>配置⽂本编辑器，例如vi，在必要时⾃动打开此⽂本编辑器。</li>
+<li><strong>git config –global –edit</strong><br>打开当前⽤户的git全局配置并编辑。</li>
+</ul>
+<h3 id="GIT-LOG"><a href="#GIT-LOG" class="headerlink" title="GIT LOG"></a>GIT LOG</h3><ul>
+<li><strong>git log -<code>&lt;limit&gt;</code></strong><br>限制log的显示数量。例如：”git log -5”仅显示最新5条commit。</li>
+<li><strong>git log –online</strong><br>每行显示一条commit。</li>
+<li><strong>git log –author&#x3D;”<code>&lt;pattern&gt;</code>“</strong><br>按提交者名字搜索并显示commit。</li>
+<li><strong>git log –grep&#x3D;”<code>&lt;pattern&gt;</code>“</strong><br>按指定内容搜索并显示commit。</li>
+<li><strong>git log <code>&lt;since&gt;</code>..<code>&lt;until&gt;</code></strong><br>显示指定范围的commit。范围参数可以是commit ID、分⽀名称、HEAD或任意相对位置。</li>
+<li><strong>git log – <code>&lt;file&gt;</code></strong><br>仅显示包含指定文件修改的commit。</li>
+<li><strong>git log –graph</strong><br>使用–graph参数显示图形化的branch信息。</li>
+</ul>
+<h3 id="GIT-RESET"><a href="#GIT-RESET" class="headerlink" title="GIT RESET"></a>GIT RESET</h3><ul>
+<li><strong>git reset</strong><br>移除所有暂存区的修改，但不会修改⼯作区。</li>
+<li><strong>git reset –hard</strong><br>移除所有暂存区的修改， 并强制删除所有工作区的修改。</li>
+<li><strong>git reset <code>&lt;commit&gt;</code></strong><br>将当前分支回滚到指定<code>&lt;commit&gt;</code>，清暂存区的修改，但保持工作区状态不变。</li>
+<li><strong>git reset –hard <code>&lt;commit&gt;</code></strong><br>将当前分⽀回滚到指定<code>&lt;commit&gt;</code>，清除暂存区的修改，并强制删除所有⼯作区的修改。</li>
+</ul>
+<h3 id="GIT-REBASE"><a href="#GIT-REBASE" class="headerlink" title="GIT REBASE"></a>GIT REBASE</h3><ul>
+<li><strong>git rebase -i <code>&lt;base&gt;</code></strong><br>以交互模式对当前分支做rebase。</li>
+</ul>
+<h3 id="GIT-PULL"><a href="#GIT-PULL" class="headerlink" title="GIT PULL"></a>GIT PULL</h3><ul>
+<li><strong>git pull –rebase <code>&lt;remote&gt;</code></strong><br>抓取所有远程分⽀，并以rebase模式并⼊本地repo⽽不是merge。</li>
+</ul>
+<h3 id="GIT-PUSH"><a href="#GIT-PUSH" class="headerlink" title="GIT PUSH"></a>GIT PUSH</h3><ul>
+<li><strong>git push <code>&lt;remote&gt;</code> –force</strong><br>将本地分支推送到远程。不要使用–force参数，除非完全明白这个操作。</li>
+<li><strong>git push <code>&lt;remote&gt;</code> –tags</strong><br>使⽤push命令并不会⾃动将本地tag推送到远程。加上–tags参数会将所有本地tag推送到远程。</li>
+</ul>
 
     </div>
 
@@ -293,9 +352,7 @@
       <footer class="post-footer">
           <div class="post-tags">
               <a href="/tags/%E7%BB%8F%E9%AA%8C%E5%88%86%E4%BA%AB/" rel="tag"><i class= "fa fa-tags"></i> 经验分享</a>
-              <a href="/tags/C/" rel="tag"><i class= "fa fa-tags"></i> C++</a>
-              <a href="/tags/Qt/" rel="tag"><i class= "fa fa-tags"></i> Qt</a>
-              <a href="/tags/Visual-Studio/" rel="tag"><i class= "fa fa-tags"></i> Visual Studio</a>
+              <a href="/tags/Git/" rel="tag"><i class= "fa fa-tags"></i> Git</a>
           </div>
 
         
@@ -304,13 +361,10 @@
         
     <div class="post-nav">
       <div class="post-nav-item">
-    <a href="/2022/03/08/Linux%E4%B8%8B%E7%BC%96%E8%AF%91DCNv2/" rel="prev" title="Linux下编译DCNv2">
-      <i class="fa fa-chevron-left"></i> Linux下编译DCNv2
+    <a href="/2022/03/10/Markdown%E5%9F%BA%E6%9C%AC%E7%94%A8%E6%B3%95/" rel="prev" title="Markdown基本用法">
+      <i class="fa fa-chevron-left"></i> Markdown基本用法
     </a></div>
-      <div class="post-nav-item">
-    <a href="/2022/03/08/Windows%E4%B8%8B%E9%85%8D%E7%BD%AEMingw64%E5%92%8CMSYS2%E7%8E%AF%E5%A2%83/" rel="next" title="Windows下配置Mingw64和MSYS2环境">
-      Windows下配置Mingw64和MSYS2环境 <i class="fa fa-chevron-right"></i>
-    </a></div>
+      <div class="post-nav-item"></div>
     </div>
       </footer>
     
@@ -369,7 +423,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Qt"><span class="nav-number">1.</span> <span class="nav-text">Qt</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#GIT-BASICS"><span class="nav-number">1.</span> <span class="nav-text">GIT BASICS</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#GIT-DIFF"><span class="nav-number">2.</span> <span class="nav-text">GIT DIFF</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#UNDOING-CHANGES"><span class="nav-number">3.</span> <span class="nav-text">UNDOING CHANGES</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#REWRITING-GIT-HISTORY"><span class="nav-number">4.</span> <span class="nav-text">REWRITING GIT HISTORY</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#GIT-BRANCHES"><span class="nav-number">5.</span> <span class="nav-text">GIT BRANCHES</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#REMOTE-REPOSITORIES"><span class="nav-number">6.</span> <span class="nav-text">REMOTE REPOSITORIES</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#GIT-CONFIG"><span class="nav-number">7.</span> <span class="nav-text">GIT CONFIG</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#GIT-LOG"><span class="nav-number">8.</span> <span class="nav-text">GIT LOG</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#GIT-RESET"><span class="nav-number">9.</span> <span class="nav-text">GIT RESET</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#GIT-REBASE"><span class="nav-number">10.</span> <span class="nav-text">GIT REBASE</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#GIT-PULL"><span class="nav-number">11.</span> <span class="nav-text">GIT PULL</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#GIT-PUSH"><span class="nav-number">12.</span> <span class="nav-text">GIT PUSH</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
