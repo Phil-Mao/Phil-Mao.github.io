@@ -1,0 +1,869 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.0.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+  <link rel="stylesheet" href="/lib/pace/pace-theme-center-radar.min.css">
+  <script src="/lib/pace/pace.min.js"></script>
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"phil-mao.github.io","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","width":300,"display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="Process small satellite images with an open-source software:Micmac">
+<meta property="og:type" content="article">
+<meta property="og:title" content="micmac实验">
+<meta property="og:url" content="https://phil-mao.github.io/2022/03/13/micmac%E5%AE%9E%E9%AA%8C/index.html">
+<meta property="og:site_name" content="Phil-Mao">
+<meta property="og:description" content="Process small satellite images with an open-source software:Micmac">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://gitee.com/maoshunfu/blogimages/raw/master/img/dataset.png">
+<meta property="og:image" content="https://gitee.com/maoshunfu/blogimages/raw/master/img/activate.png">
+<meta property="og:image" content="https://gitee.com/maoshunfu/blogimages/raw/master/img/Tapioca.png">
+<meta property="og:image" content="https://gitee.com/maoshunfu/blogimages/raw/master/img/Tapioca_out.png">
+<meta property="og:image" content="https://gitee.com/maoshunfu/blogimages/raw/master/img/Convert2GenBundle_cmd.png">
+<meta property="og:image" content="https://gitee.com/maoshunfu/blogimages/raw/master/img/Convert2GenBundle.png">
+<meta property="og:image" content="https://gitee.com/maoshunfu/blogimages/raw/master/img/Campari.png">
+<meta property="og:image" content="https://gitee.com/maoshunfu/blogimages/raw/master/img/Bundle.png">
+<meta property="og:image" content="https://gitee.com/maoshunfu/blogimages/raw/master/img/Campari_out.png">
+<meta property="og:image" content="https://gitee.com/maoshunfu/blogimages/raw/master/img/terrain-geom.jpg">
+<meta property="og:image" content="https://gitee.com/maoshunfu/blogimages/raw/master/img/Malt_1.png">
+<meta property="og:image" content="https://gitee.com/maoshunfu/blogimages/raw/master/img/Malt_2.png">
+<meta property="og:image" content="https://gitee.com/maoshunfu/blogimages/raw/master/img/Malt_out_1.png">
+<meta property="og:image" content="https://gitee.com/maoshunfu/blogimages/raw/master/img/Malt_out_2.png">
+<meta property="og:image" content="https://gitee.com/maoshunfu/blogimages/raw/master/img/Malt_out_3.png">
+<meta property="og:image" content="https://gitee.com/maoshunfu/blogimages/raw/master/img/GrShade.png">
+<meta property="og:image" content="https://gitee.com/maoshunfu/blogimages/raw/master/img/GrShade_out.png">
+<meta property="og:image" content="https://gitee.com/maoshunfu/blogimages/raw/master/img/ortho_1.png">
+<meta property="og:image" content="https://gitee.com/maoshunfu/blogimages/raw/master/img/ortho_2.png">
+<meta property="og:image" content="https://gitee.com/maoshunfu/blogimages/raw/master/img/ortho_out.png">
+<meta property="og:image" content="https://gitee.com/maoshunfu/blogimages/raw/master/img/img-geom.jpg">
+<meta property="og:image" content="https://gitee.com/maoshunfu/blogimages/raw/master/img/SMDM.jpg">
+<meta property="og:image" content="https://gitee.com/maoshunfu/blogimages/raw/master/img/TPMM_1.png">
+<meta property="og:image" content="https://gitee.com/maoshunfu/blogimages/raw/master/img/TPMM_2.png">
+<meta property="og:image" content="https://gitee.com/maoshunfu/blogimages/raw/master/img/TPMM_out1.png">
+<meta property="og:image" content="https://gitee.com/maoshunfu/blogimages/raw/master/img/TPMM_out2.png">
+<meta property="og:image" content="https://gitee.com/maoshunfu/blogimages/raw/master/img/TPMM_out2.png">
+<meta property="og:image" content="https://gitee.com/maoshunfu/blogimages/raw/master/img/TPMM_out3.png">
+<meta property="og:image" content="https://gitee.com/maoshunfu/blogimages/raw/master/img/TPMM_out3.png">
+<meta property="og:image" content="https://gitee.com/maoshunfu/blogimages/raw/master/img/TPMM_out4.png">
+<meta property="og:image" content="https://gitee.com/maoshunfu/blogimages/raw/master/img/Malt_UrbanMNE.png">
+<meta property="og:image" content="https://gitee.com/maoshunfu/blogimages/raw/master/img/Fusion_.png">
+<meta property="og:image" content="https://gitee.com/maoshunfu/blogimages/raw/master/img/Fusion_1.png">
+<meta property="og:image" content="https://gitee.com/maoshunfu/blogimages/raw/master/img/Fusion_out1.png">
+<meta property="og:image" content="https://gitee.com/maoshunfu/blogimages/raw/master/img/Fusion_out2.png">
+<meta property="og:image" content="https://gitee.com/maoshunfu/blogimages/raw/master/img/Fusion_DSM.png">
+<meta property="og:image" content="https://gitee.com/maoshunfu/blogimages/raw/master/img/Fusion_DSMout.png">
+<meta property="og:image" content="https://gitee.com/maoshunfu/blogimages/raw/master/img/Fusion_GShade.png">
+<meta property="og:image" content="https://gitee.com/maoshunfu/blogimages/raw/master/img/Fusion_GShade_out.png">
+<meta property="og:image" content="https://gitee.com/maoshunfu/blogimages/raw/master/img/Fusion_GShade_out_1.png">
+<meta property="og:image" content="https://gitee.com/maoshunfu/blogimages/raw/master/img/Fusion_ply.png">
+<meta property="og:image" content="https://gitee.com/maoshunfu/blogimages/raw/master/img/Fusion_ply_out.png">
+<meta property="og:image" content="https://gitee.com/maoshunfu/blogimages/raw/master/img/Fusion_ply_out_1.png">
+<meta property="og:image" content="https://gitee.com/maoshunfu/blogimages/raw/master/img/STD_MALT.png">
+<meta property="og:image" content="https://gitee.com/maoshunfu/blogimages/raw/master/img/STD_MALT_out.png">
+<meta property="og:image" content="https://github.com/Phil-Mao/micmac-satellite_example/blob/main/imgs/STD_MALT_out_1.png">
+<meta property="article:published_time" content="2022-03-13T11:46:17.000Z">
+<meta property="article:modified_time" content="2022-03-14T02:02:26.746Z">
+<meta property="article:author" content="Phil-Mao">
+<meta property="article:tag" content="经验分享">
+<meta property="article:tag" content="Conda">
+<meta property="article:tag" content="Windows">
+<meta property="article:tag" content="卫星">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://gitee.com/maoshunfu/blogimages/raw/master/img/dataset.png">
+
+<link rel="canonical" href="https://phil-mao.github.io/2022/03/13/micmac%E5%AE%9E%E9%AA%8C/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>micmac实验 | Phil-Mao</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Phil-Mao</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">自由在于选择看待事物的态度</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+  <a href="https://github.com/phil-mao" class="github-corner" title="Follow me on GitHub" aria-label="Follow me on GitHub" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://phil-mao.github.io/2022/03/13/micmac%E5%AE%9E%E9%AA%8C/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/apple-touch-icon.png">
+      <meta itemprop="name" content="Phil-Mao">
+      <meta itemprop="description" content="爱我所爱，行我所行，听从我心，无问西东">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Phil-Mao">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          micmac实验
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2022-03-13 19:46:17" itemprop="dateCreated datePublished" datetime="2022-03-13T19:46:17+08:00">2022-03-13</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2022-03-14 10:02:26" itemprop="dateModified" datetime="2022-03-14T10:02:26+08:00">2022-03-14</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E8%A1%8C%E6%98%9F%E6%B5%8B%E7%BB%98/" itemprop="url" rel="index"><span itemprop="name">行星测绘</span></a>
+                </span>
+            </span>
+
+          
+            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span>
+            <div class="post-description">Process small satellite images with an open-source software:Micmac</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="micmac-satellite-example"><a href="#micmac-satellite-example" class="headerlink" title="micmac-satellite_example"></a>micmac-satellite_example</h1><p>Process small satellite images with an open-source software: <code>MicMac</code></p>
+<h1 id="Prepare"><a href="#Prepare" class="headerlink" title="Prepare"></a>Prepare</h1><ul>
+<li><p><a target="_blank" rel="noopener" href="https://micmac.ensg.eu/index.php/Install_MicMac_Windows">MicMac</a></p>
+</li>
+<li><p><a href="%5Bhttps://drive.google.com/uc?id=18hmQL5kIqhcnR5ahp8IUsMZxLv7jvjgB%5D">Sample data</a></p>
+<blockquote>
+<p><em>I installed the MicMac on Windows, users can install it either on Ubuntu or Windows.</em></p>
+</blockquote>
+</li>
+</ul>
+<p><strong><em>The dataset consists of:</em></strong></p>
+<ul>
+<li>4 images (tif)</li>
+<li>4 corresponding RPCs (xml)</li>
+<li><em>WGS84toUTM.xml</em> with the definition of a projection coordinate system (proj4 format)</li>
+</ul>
+<p><strong><em>The dataset:</em></strong> </p>
+<p><img src="https://gitee.com/maoshunfu/blogimages/raw/master/img/dataset.png" alt="dataset"></p>
+<h1 id="Process"><a href="#Process" class="headerlink" title="Process"></a>Process</h1><p>In this project, I installed the MicMac in miniconda’s virtual environment. First, activate my env, then you can check the MicMac with <code>mm3d</code>, like this:</p>
+<p><img src="https://gitee.com/maoshunfu/blogimages/raw/master/img/activate.png"></p>
+<h2 id="1-Extract-SIFT-tie-points"><a href="#1-Extract-SIFT-tie-points" class="headerlink" title="1. Extract SIFT tie-points"></a>1. Extract SIFT tie-points</h2><ul>
+<li><p><strong>computation strategy:</strong> there exist several predefined strategies to compute tie-points: <code>Line</code>, <code>All</code>, <code>MulScale</code>, <code>File</code>. We will use the <code>All</code> strategy where tie-points are searched between all possible pairs. Refer to MicMac documentation for the other modes.</p>
+</li>
+<li><p><strong>image resolution:</strong> tie-points extraction is very costly, and to limit the computation time we usually downsampled the images; in this example, indicate resolution of <code>-1</code> which means full-resolution images; otherwise, if set to, e.g., <code>2000</code>, the images will be downsampled such that the larger image dimension (typically the width) will have <code>2000</code> pixels; the other dimension will have a size that is proportionally smaller.</p>
+</li>
+<li><p><strong>ExpTxt&#x3D;1:</strong> the extracted tie-points will be saved in a text format (as opossed to the default dat format).</p>
+</li>
+<li><p><strong>results:</strong> tie-points are stored in the <code>Homol</code> directory. For instance, tie-points correponding to image <code>Im1.tif</code> will be stored in <code>Homol/PastisIm1.tif/</code> directory. If <code>Im1.tif</code> overlaps with <code>Im2.tif</code> and <code>Im3.tif</code>, their tie-points will be stored in <code>Homol/PastisIm1.tif/Im2.tif.dat</code> and <code>Homol/PastisIm1.tif/Im3.tif.dat</code>, respectively. If you chose to export in the text format, the dat extension will be replaced with <code>txt</code>.</p>
+</li>
+</ul>
+<p><em>Note: Intermediary results are stored in the <code>Pastis</code> directory. It takes a significant amount of space and is not used at later processing stages, therefore you may delete it.</em>     </p>
+<hr>
+<p><strong>–&gt;Start with this:</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mm3d Tapioca All .*tif -1 ExpTxt=1 @ExitOnBrkp</span><br></pre></td></tr></table></figure>
+<p><img src="https://gitee.com/maoshunfu/blogimages/raw/master/img/Tapioca.png"></p>
+<p><em>Here is the directory:</em></p>
+<p><img src="https://gitee.com/maoshunfu/blogimages/raw/master/img/Tapioca_out.png"></p>
+<h2 id="2-RPC-bundle-adjustment"><a href="#2-RPC-bundle-adjustment" class="headerlink" title="2. RPC-bundle adjustment"></a>2. RPC-bundle adjustment</h2><h3 id="Read-the-RPCs-in-DIMAP-format"><a href="#Read-the-RPCs-in-DIMAP-format" class="headerlink" title="Read the RPCs in DIMAP format"></a>Read the RPCs in DIMAP format</h3><p>This function reads the DIMAP format RPCs and converts it to a MicMac format. Several parameters are specified here:  </p>
+<ul>
+<li><p><code>(.*).tif</code> this is the pattern of input images (note the dot preceding the star which is the posix convention)</p>
+</li>
+<li><p><code>\$1.xml</code> is the corresponding pattern of RPC files; I use here a regular expression that associates the image name with its corresponding RPC file name; you may also run the command independently for each image if you’re not familiar with regular expressions;</p>
+</li>
+<li><p><code>RPC-d0</code> is the directory name where the converted files will be stored; it will serve as input in the following step, i.e., the bundle adjustment;</p>
+</li>
+<li><p><code>Degre=0</code>, the degree of the polynomial correction;</p>
+</li>
+</ul>
+<blockquote>
+<p>By choosing a zero-degree polynomial we will correct the satellite’s geolocalisation by modelling a 3D image shift.</p>
+</blockquote>
+<ul>
+<li><code>ChSys=WGS84toUTM.xml</code> definition of the projection coordinate sytem; MicMac expects that the processing coordinate frame is euclidean and all three coordinates have the same unit. The RPCs are expressed in geographical coordinates which are neither euclidean, nor unique in terms of units. To overcome that, MicMac will transfer, on the fly, the RPCs to a user-defined coordinate system, in this exemple defined in the <code>WGS84toUTM.xml</code> file. The definition of the coordinate system follows the <code>proj4</code> library convention. You can retrieve the code corresponding to the coordinate frame of your interest from <code>https://spatialreference.org/</code></li>
+</ul>
+<p><strong>–&gt;Then,</strong></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mm3d Convert2GenBundle &quot;(.*).tif&quot; &quot;\$1.xml&quot; RPC-d0 ChSys=WGS84toUTM.xml Degre=0  @ExitOnBrkp</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://gitee.com/maoshunfu/blogimages/raw/master/img/Convert2GenBundle_cmd.png"></p>
+<hr>
+<p><em>This step creates a new folder <code>Ori-RPC-d0</code>, it includes 8 files:</em></p>
+<p><img src="https://gitee.com/maoshunfu/blogimages/raw/master/img/Convert2GenBundle.png"></p>
+<hr>
+<h3 id="Run-the-adjustment"><a href="#Run-the-adjustment" class="headerlink" title="Run the adjustment"></a>Run the adjustment</h3><p>The input parameters:</p>
+<ul>
+<li><p><code>RPC-d0</code> is the folder with the initial geolocalisation</p>
+</li>
+<li><p><code>RPC-d0_adj</code> is the folder where the adjusted geoloc is saved</p>
+</li>
+<li><p><code>ExpTxt=1</code> indicates that tie-points are stored in text format</p>
+</li>
+</ul>
+<p><strong>–&gt;Next,</strong>  </p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mm3d Campari &quot;.*tif&quot; RPC-d0 RPC-d0-adj ExpTxt=1 @ExitOnBrkp</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://gitee.com/maoshunfu/blogimages/raw/master/img/Campari.png"><br><img src="https://gitee.com/maoshunfu/blogimages/raw/master/img/Bundle.png">  </p>
+<hr>
+<p>One way to asses the quality of the adjustment is to look at the tie-points residual (for more sophisticated quality estimates see <code>MMTestOrient</code> in MicMac documentation).<br>The bundle adjustment is carried out in several iterations. Let’s look at image TPMM_0435.tif in the last iteration:</p>
+<blockquote>
+<p>RES:[TPMM_0435.tif][g] ER2 0.24636 Nn 100 Of 11753 Mul 5171 Mul-NN 5171 Time 1.15821</p>
+</blockquote>
+<ul>
+<li><p><code>0.24636</code> pixels is the mean residual calculated over all tie-points (i.e.,  <em>σ</em>  of the bundle)</p>
+</li>
+<li><p><code>Nn 100</code> means that 100 %  of tie-points were considered as inliers</p>
+</li>
+<li><p><code>11753</code> there were as many tie-points found</p>
+</li>
+<li><p><code>5171</code> there were as many multiple tie-points found (out of the <code>11753</code>), i.e., tie-points observed in at least 3 images;</p>
+</li>
+</ul>
+<p><em>Now, the directory:</em></p>
+<p><img src="https://gitee.com/maoshunfu/blogimages/raw/master/img/Campari_out.png"></p>
+<hr>
+<h2 id="3-Surface-reconstruction"><a href="#3-Surface-reconstruction" class="headerlink" title="3.Surface reconstruction"></a>3.Surface reconstruction</h2><p>We will now calculate the surface with the semi-global dense image matching [Deseilligny &amp; Paparoditis, 2006].</p>
+<blockquote>
+<p>Deseilligny, M. and Paparoditis, N., 2006. A multiresolution and optimization-based image matching approach: An application to surface reconstruction from SPOT5-HRS stereo imagery. Archives of Photogrammetry, Remote Sensing and Spatial Information Sciences, 36(1&#x2F;W41), pp.1-5.</p>
+</blockquote>
+<h3 id="Method-1-Matching-in-object-geometry"><a href="#Method-1-Matching-in-object-geometry" class="headerlink" title="Method 1: Matching in object geometry"></a>Method 1: Matching in object geometry</h3><p>The computation will be carried out in the so-called terrain geometry, where the optimization is defined in the <code>(X,Y)</code> of the object space, and we are looking for the most optimal <code>Z</code>-coordinates (see Figure below). This geometry is well adapted to 2.5D surface computation. </p>
+<p><img src="https://gitee.com/maoshunfu/blogimages/raw/master/img/terrain-geom.jpg"></p>
+<hr>
+<p>The input parameters are:</p>
+<ul>
+<li><p><code>UrbanMNE</code> is a predefined term and it defines a number of processing parameters (e.g., low regularization, small matching wodows, terrain geometry)</p>
+</li>
+<li><p><code>.*tif</code> is the image set that will be used in the processing</p>
+</li>
+<li><p><code>RPC-d0-adj</code> is the name of the directory containing the geoloclisation</p>
+</li>
+<li><p><code>SzW=2</code> defines the matching window size, i.e., with size set to 2, the window size is <code>5x5</code></p>
+</li>
+<li><p><code>Regul</code> is the regularization term  α ; in <code>UrbanMNE</code> it is by default set to 0.02 becase in urban zones we’re typically interested in reconstructing fine details; the dataset used in this example, however, represents a smooth surface so we’re just fine with a more agressive regularization; moreover, our images are quite noisy and by adding more regularization we will avoid noisy surface reconstructions;</p>
+</li>
+<li><p><code>DoOrtho=1</code>, this parameters wil force MicMac to create individual orthomosaic, i.e., rectify each image; the rectified images are stored in <code>Ortho-MEC-Malt/Ort_*.tif</code>; to create the final orthophotomap we will still need to do mosaicing with <code>Tawny</code> (later in this tutorial);</p>
+</li>
+<li><p><code>NbVI=2</code> sets the necessary minimum number of images for MicMac to compute the surface; by default the value is set to 3 which means that in areas with only two overlapping images, the surface will not be computed;</p>
+</li>
+<li><p><code>EZA=1</code>, this parameter will force the output surface raster to save the Z-coordinates in their absolute values; without explicitly forcing MicMac to do that, to avoid having to store large values inside the raster tiff, it will apply a normalisation (normalisation parameters <code>OrigineAlti</code> and <code>ResolutionAlti</code> are to be found in the accompanying xml files);</p>
+</li>
+</ul>
+<p><strong>–&gt;Run below,</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mm3d Malt UrbanMNE &quot;.*tif&quot; RPC-d0-adj SzW=2 Regul=0.2 DoOrtho=1 NbVI=2 EZA=1 @ExitOnBrkp</span><br></pre></td></tr></table></figure>
+<p><img src="https://gitee.com/maoshunfu/blogimages/raw/master/img/Malt_1.png"><br><img src="https://gitee.com/maoshunfu/blogimages/raw/master/img/Malt_2.png"></p>
+<hr>
+<p><em>Reading the output files</em><br>The matching is carried out at multi-resolutions, i.e., we first calculate the surface using low resolution images (top-most level of the image pyramid), then we propagate the solution to lower levels and refine it, so long we have not reached the bottom of the image pyramid. The surface reconstructions at each level are stored inside the <code>MEC-Malt</code> directory. Here’s how to decipher the files:</p>
+<ul>
+<li><p><code>MEC-Malt/Z_Num8_DeZoom1_STD-MALT.tif</code> represents the surface raster at the highest resolution;</p>
+</li>
+<li><p><code>MEC-Malt/Z_Num8_DeZoom1_STD-MALT.xml</code> is its metadata file that encodes the georeferencing; let’s assume you’d like to convert a pixel <em>(i,j)</em>  from its image coordinates to its georeferenced coordinates (i.e., object coordinates):</p>
+</li>
+<li><p><code>Z-coordinate normalised</code> :  $$\sum_{i,j}^{img}Z&#x3D;Z_Num_File^{img}(i,j)$$  </p>
+</li>
+<li><p><code>Z-coordinate</code> :  $$\sum_{i,j}^{obj}Z&#x3D;OrigineAlti+ResolutionAlti\cdot (i,j)$$</p>
+</li>
+<li><p><code>XY-coordinates</code> :  $(X,Y)&#x3D;OriginePlani+ResolutionAlti\cdot(i,j) $</p>
+</li>
+<li><p><code>MEC-Malt/Masq_STD-MALT_DeZoomX.tif</code> is a binary mask file that is a result of your input mask (if you used one) and a mask that is automatically calculated in the matching optimisation phase;</p>
+</li>
+<li><p><code>MEC-Malt/Correl_STD-MALT_Num_X.tif</code> are the images with storing the correlation scores (it is not pure correlation, it is the correlation store after the aggregation step)</p>
+</li>
+</ul>
+<p><em>Here is the <code>MEC-Malt</code> directory:</em></p>
+<p><img src="https://gitee.com/maoshunfu/blogimages/raw/master/img/Malt_out_1.png"></p>
+<hr>
+<p><em>The <code>Ortho-MEC-Malt</code> directory:</em></p>
+<p><img src="https://gitee.com/maoshunfu/blogimages/raw/master/img/Malt_out_2.png"></p>
+<hr>
+<p><em>The <code>Pyram</code> directory:</em></p>
+<p><img src="https://gitee.com/maoshunfu/blogimages/raw/master/img/Malt_out_3.png"></p>
+<hr>
+<h4 id="Create-a-grayshaded-DSM"><a href="#Create-a-grayshaded-DSM" class="headerlink" title="Create a grayshaded DSM"></a>Create a grayshaded DSM</h4><p>Represent the surface in form of a grayshading. To visually asses the quality of your surface, it is much more intuitive than just looking at the depth&#x2F;Z image.</p>
+<p><strong>–&gt;Run it,</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mm3d GrShade MEC-Malt/Z_Num8_DeZoom1_STD-MALT.tif ModeOmbre=IgnE Mask=MEC-Malt/Masq_STD-MALT_DeZoom1.tif @ExitOnBrkp</span><br></pre></td></tr></table></figure>
+<p><img src="https://gitee.com/maoshunfu/blogimages/raw/master/img/GrShade.png"></p>
+<p><em>The <code>MEC-Malt/Z_Num8_DeZoom1_STD-MALTShade.tif</code>,</em></p>
+<p><img src="https://gitee.com/maoshunfu/blogimages/raw/master/img/GrShade_out.png"></p>
+<hr>
+<h4 id="Generate-an-orthophotmap"><a href="#Generate-an-orthophotmap" class="headerlink" title="Generate an orthophotmap"></a>Generate an orthophotmap</h4><p><code>Tawny</code> will mosaic the per-image orthopĥotomosaics created in <code>Malt</code>(i.e., <code>Ortho-MEC-Malt/Ort_*.tif</code>), during matching. It will additionally perform some basic radiometry equalization. The output orthoimage is stored in <code>Ortho-MEC-Malt/Orthophotomosaic.tif</code>, and its georeferencing is stored in <code>Ortho-MEC-Malt/Orthophotomosaic.twf</code>.</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mm3d Tawny Ortho-MEC-Malt/ @ExitOnBrkp</span><br></pre></td></tr></table></figure>
+<p><img src="https://gitee.com/maoshunfu/blogimages/raw/master/img/ortho_1.png"><br><img src="https://gitee.com/maoshunfu/blogimages/raw/master/img/ortho_2.png"></p>
+<p><em>Now, we can see the <code>Ortho-MEC-Malt/Orthophotomosaic.tif</code>,</em></p>
+<p><img src="https://gitee.com/maoshunfu/blogimages/raw/master/img/ortho_out.png"></p>
+<hr>
+<h3 id="Method2-Multiview-matching-in-image-geometry-and-fusion"><a href="#Method2-Multiview-matching-in-image-geometry-and-fusion" class="headerlink" title="Method2: Multiview matching in image geometry and fusion"></a>Method2: Multiview matching in image geometry and fusion</h3><p>The computation will be carried out in the image geometry, where the optimization is defined in the <code>(x,y)</code> of the image space, and we are looking for the most optimal <code>depths</code> (see Figure below). This geometry is well adapted to true 3D surface reconstruction. Because the individual reconstructions are computed in image coordinate frames, a fusion will but carried out at the end.</p>
+<p><img src="https://gitee.com/maoshunfu/blogimages/raw/master/img/img-geom.jpg"></p>
+<hr>
+<p>The multiview pipeline is as follows [Rupnik et al., 2018]:</p>
+<ol>
+<li>Extract tie-points and do RPC-bundle adjustement (done previously)</li>
+<li>Do N per-stereo (or per-M image as we are not bound by the number of images) dense matching (<code>Malt GeomImage</code>)</li>
+<li>Transform the N depth maps to a common coordinate frame (<code>NuageBascule</code>)</li>
+<li>Fuse the N depth maps into one (<code>SMDM</code>)<br><img src="https://gitee.com/maoshunfu/blogimages/raw/master/img/SMDM.jpg"><hr>
+<blockquote>
+<p>Rupnik, E., Pierrot-Deseilligny, M. and Delorme, A., 2018. 3D reconstruction from multi-view VHR-satellite images in MicMac. ISPRS Journal of Photogrammetry and Remote Sensing, 139, pp.201-211.</p>
+</blockquote>
+</li>
+</ol>
+<h4 id="Do-two-per-triplet-image-matching"><a href="#Do-two-per-triplet-image-matching" class="headerlink" title="Do two per-triplet image matching"></a>Do two per-triplet image matching</h4><p>We will compute two surfaces using two different subsets of the images.</p>
+<p>Input parameters:</p>
+<ul>
+<li><p><code>GeomImage</code> is a predefined term and it defines a number of processing parameters (e.g., low regularization, small matching wodows, image geometry)</p>
+</li>
+<li><p><code>TPMM_(0435|0566|1088).*tif</code> is the image set that will be used in the processing; in this example it is an image triplet; we take 3 <strong>consecutive images</strong> to make sure that the  $\frac{B}{H}$  ratios in the set are relatively small</p>
+</li>
+<li><p><code>RPC-d0-adj</code> is the name of the directory containing the geolocalisation</p>
+</li>
+<li><p><code>Master=TPMM_0566.tif</code> is the master image, i.e., the optimization is defined over each pixel of that image</p>
+</li>
+<li><p><code>SzW=2 and Regul=0.2</code>, similarily to Method1, we add regularization and use bigger correlation windows because: (1) the geometry of the surface is smooth (i.e., no discontinuities), and (2) the images are quiet noisy;</p>
+</li>
+<li><p><code>NbVI=2</code> sets the necessary minimum number of images for MicMac to compute the surface; by default the value is set to 3 which means that in areas with only two overlapping images, the surface will not be computed;</p>
+</li>
+</ul>
+<p><strong>–&gt;First run this,</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"># The first triplet</span><br><span class="line">mm3d Malt GeomImage &quot;TPMM_(0435|0566|1088).*tif&quot; RPC-d0-adj Master=TPMM_0566.tif SzW=1 Regul=0.1 NbVI=2 ZPas=1 @ExitOnBrkp</span><br></pre></td></tr></table></figure>
+<p><img src="https://gitee.com/maoshunfu/blogimages/raw/master/img/TPMM_1.png"><br><img src="https://gitee.com/maoshunfu/blogimages/raw/master/img/TPMM_2.png"></p>
+<hr>
+<p><em>This may take almost 10 minutes, which is the most time-consuming in the workflow</em></p>
+<blockquote>
+<p>PID : 37800 ;   [Beginning at ] Thu Aug 12 17:21:47 2021<br> PID : 37800 ;   [Ending correctly at] Thu Aug 12 17:30:53 2021</p>
+</blockquote>
+<hr>
+<p><em>Then, you can get the <code>MM-Malt-Img-TPMM_0255</code> directory,</em></p>
+<p><img src="https://gitee.com/maoshunfu/blogimages/raw/master/img/TPMM_out1.png"></p>
+<hr>
+<p><em>In this directory, there are <strong>113</strong> new files:</em></p>
+<p><img src="https://gitee.com/maoshunfu/blogimages/raw/master/img/TPMM_out2.png"></p>
+<hr>
+<p><strong>–&gt;Then, do this again with different parameters,</strong></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta"># </span><span class="language-bash">the second triplet</span></span><br><span class="line">mm3d Malt GeomImage &quot;TPMM_(0566|1088|1216).*tif&quot; RPC-d0-adj Master=TPMM_1088.tif SzW=1 Regul=0.1 NbVI=2 ZPas=1   @ExitOnBrkp</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://gitee.com/maoshunfu/blogimages/raw/master/img/TPMM_out2.png"><br><img src="https://gitee.com/maoshunfu/blogimages/raw/master/img/TPMM_out3.png"></p>
+<hr>
+<p><em>This also takes about 10 minutes.</em></p>
+<blockquote>
+<p>PID : 35656 ;   [Beginning at ] Thu Aug 12 17:37:53 2021<br> PID : 35656 ;   [Ending correctly at] Thu Aug 12 17:47:21 2021</p>
+</blockquote>
+<hr>
+<p> <em>After that, you get the <code>MM-Malt-Img-TPMM_1088</code> folder,</em></p>
+<p><img src="https://gitee.com/maoshunfu/blogimages/raw/master/img/TPMM_out3.png"></p>
+<hr>
+<p><em>In the directory, there are <strong>113</strong> files:</em></p>
+<p><img src="https://gitee.com/maoshunfu/blogimages/raw/master/img/TPMM_out4.png"></p>
+<hr>
+<h4 id="Transform-the-depth-maps-to-a-common-coordinate-frame"><a href="#Transform-the-depth-maps-to-a-common-coordinate-frame" class="headerlink" title="Transform the depth maps to a common coordinate frame"></a>Transform the depth maps to a common coordinate frame</h4><ul>
+<li><p>The  $1^{st}$  command <code>Malt</code> <code>UrbanMNE</code> does image matching in ground geometry (we’ve used it before), but since we indicate <code>DoMEC=0</code> it will not calculate the matching, all it will do is to create metadata defining the coordinate frame of the ground geometry. The output, as before, is stored in <code>MEC-Malt</code> folder;</p>
+</li>
+<li><p>The  $2^{nd}$  command NuageBascule will apply the transformation; the parameters are:</p>
+<ul>
+<li><code>MM-Malt-Img-TPMM_0566/NuageImProf_STD-MALT_Etape_8.xml</code> is the metadata file defining the input coordinate frame</li>
+<li><code>MEC-Malt/NuageImProf_STD-MALT_Etape_8.xml</code> is the metadata file defining the target coordinate frame (i.e., it is the terrain geometry)</li>
+<li><code>Fusion/DSM_Tri1.xml</code> is the output metadata file, i.e., the input file transformed to the target coordinate frame; it will be accompagned by several other files containing the surface itself, the mask and the correlation image (see the inside of the <code>Fusion</code> folder);</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"># define the common frame`</span><br><span class="line">mm3d Malt UrbanMNE &quot;.*tif&quot; RPC-d0-adj DoMEC=0  @ExitOnBrkp</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"># create a directory that will store the fused surface</span><br><span class="line">mkdir Fusion</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"># do 3D spatial similarity of the first triplet depth map</span><br><span class="line">mm3d NuageBascule MM-Malt-Img-TPMM_0566/NuageImProf_STD-MALT_Etape_8.xml MEC-Malt/NuageImProf_STD-MALT_Etape_8.xml Fusion/DSM_Tri1.xml @ExitOnBrkp</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"># do 3D spatial similarity of the second triplet depth map</span><br><span class="line">mm3d NuageBascule MM-Malt-Img-TPMM_1088/NuageImProf_STD-MALT_Etape_8.xml MEC-Malt/NuageImProf_STD-MALT_Etape_8.xml Fusion/DSM_Tri2.xml @ExitOnBrkp</span><br></pre></td></tr></table></figure>
+
+
+<p><img src="https://gitee.com/maoshunfu/blogimages/raw/master/img/Malt_UrbanMNE.png"></p>
+<hr>
+<p><em>Make Fusion directory,</em></p>
+<p><img src="https://gitee.com/maoshunfu/blogimages/raw/master/img/Fusion_.png"><br><img src="https://gitee.com/maoshunfu/blogimages/raw/master/img/Fusion_1.png"></p>
+<hr>
+<p><em>The <code>Fusion</code> directory:</em></p>
+<p><img src="https://gitee.com/maoshunfu/blogimages/raw/master/img/Fusion_out1.png"><br><img src="https://gitee.com/maoshunfu/blogimages/raw/master/img/Fusion_out2.png"></p>
+<hr>
+<h4 id="Fuse-the-individual-depth-maps"><a href="#Fuse-the-individual-depth-maps" class="headerlink" title="Fuse the individual depth maps"></a>Fuse the individual depth maps</h4><p>The fusion takes all the surfaces specified by the regular expression and merges it. The fusion takes into account the correlation images and treats it as confidence maps.</p>
+<p>Input parameters:</p>
+<ul>
+<li><code>Fusion/DSM_Tri.*xml</code> the subset of surfaces that will be merged;</li>
+</ul>
+<p>Tha result is saved to <code>Fusion/Fusion_Prof.tif</code>, there is a corresponding mask and a correlation map named with <code>_Mask</code> and <code>Correl</code> postfixes, respectively.</p>
+<p><strong>–&gt;Next,</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mm3d SMDM Fusion/DSM_Tri.*xml  @ExitOnBrkp</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://gitee.com/maoshunfu/blogimages/raw/master/img/Fusion_DSM.png"></p>
+<hr>
+<p><em>This generates 6 new files:</em></p>
+<p><img src="https://gitee.com/maoshunfu/blogimages/raw/master/img/Fusion_DSMout.png"></p>
+<hr>
+<h4 id="Visualise-in-grayshade-and-export-to-ply"><a href="#Visualise-in-grayshade-and-export-to-ply" class="headerlink" title="Visualise in grayshade and export to ply"></a>Visualise in grayshade and export to ply</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">mm3d GrShade Fusion/Fusion_Prof.tif Out=Fusion/Fusion_GShade.tif ModeOmbre=IgnE @ExitOnBrkp</span><br><span class="line"></span><br><span class="line"># export to ply</span><br><span class="line">mm3d Nuage2Ply Fusion/Fusion.xml Out=Fusion.ply</span><br></pre></td></tr></table></figure>
+
+<p><em>1. Generate <code>Fusion_GShade.tif</code></em></p>
+<p><img src="https://gitee.com/maoshunfu/blogimages/raw/master/img/Fusion_GShade.png"></p>
+<hr>
+<p><img src="https://gitee.com/maoshunfu/blogimages/raw/master/img/Fusion_GShade_out.png"></p>
+<hr>
+<p><em><code>Fusion_GShade.tif</code> in this <strong>QGIS</strong></em></p>
+<p><img src="https://gitee.com/maoshunfu/blogimages/raw/master/img/Fusion_GShade_out_1.png"></p>
+<hr>
+<p><em>2. Generate <code>Fusion.ply</code></em></p>
+<p><img src="https://gitee.com/maoshunfu/blogimages/raw/master/img/Fusion_ply.png"></p>
+<hr>
+<p><img src="https://gitee.com/maoshunfu/blogimages/raw/master/img/Fusion_ply_out.png"></p>
+<hr>
+<p><em>Here, I show this point cloud in <strong>CloudCampare</strong>:</em></p>
+<p><img src="https://gitee.com/maoshunfu/blogimages/raw/master/img/Fusion_ply_out_1.png"></p>
+<hr>
+<p><em>More over,</em></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mm3d GrShade MM-Malt-Img-TPMM_1088/Z_Num8_DeZoom1_STD-MALT.tif Mask=MM-Malt-Img-TPMM_1088/Masq_STD-MALT_DeZoom1.tif  ModeOmbre=IgnE @ExitOnBrkp</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://gitee.com/maoshunfu/blogimages/raw/master/img/STD_MALT.png"><br><img src="https://gitee.com/maoshunfu/blogimages/raw/master/img/STD_MALT_out.png"></p>
+<hr>
+<p><em>I put this <code>Z_Num8_DeZoom1_STD-MALTShade.tif</code> in <strong>QGIS</strong>:</em></p>
+<p><img src="https://github.com/Phil-Mao/micmac-satellite_example/blob/main/imgs/STD_MALT_out_1.png"></p>
+<hr>
+<p>To here, the main procedure to deal with satellite images is finished, this may be helpful for some 3D reconstruction works! :)</p>
+
+    </div>
+
+    
+    
+    
+        <div class="reward-container">
+  <div></div>
+  <button onclick="var qr = document.getElementById('qr'); qr.style.display = (qr.style.display === 'none') ? 'block' : 'none';">
+    打赏
+  </button>
+  <div id="qr" style="display: none;">
+      
+      <div style="display: inline-block;">
+        <img src="/images/wechatpay.png" alt="Phil-Mao 微信支付">
+        <p>微信支付</p>
+      </div>
+      
+      <div style="display: inline-block;">
+        <img src="/images/alipay.png" alt="Phil-Mao 支付宝">
+        <p>支付宝</p>
+      </div>
+
+  </div>
+</div>
+
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E7%BB%8F%E9%AA%8C%E5%88%86%E4%BA%AB/" rel="tag"><i class= "fa fa-tags"></i> 经验分享</a>
+              <a href="/tags/Conda/" rel="tag"><i class= "fa fa-tags"></i> Conda</a>
+              <a href="/tags/Windows/" rel="tag"><i class= "fa fa-tags"></i> Windows</a>
+              <a href="/tags/%E5%8D%AB%E6%98%9F/" rel="tag"><i class= "fa fa-tags"></i> 卫星</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2022/03/13/Git%E5%B8%B8%E7%94%A8%E6%8C%87%E4%BB%A4/" rel="prev" title="Git常用指令">
+      <i class="fa fa-chevron-left"></i> Git常用指令
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#micmac-satellite-example"><span class="nav-number">1.</span> <span class="nav-text">micmac-satellite_example</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Prepare"><span class="nav-number">2.</span> <span class="nav-text">Prepare</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Process"><span class="nav-number">3.</span> <span class="nav-text">Process</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-Extract-SIFT-tie-points"><span class="nav-number">3.1.</span> <span class="nav-text">1. Extract SIFT tie-points</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-RPC-bundle-adjustment"><span class="nav-number">3.2.</span> <span class="nav-text">2. RPC-bundle adjustment</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Read-the-RPCs-in-DIMAP-format"><span class="nav-number">3.2.1.</span> <span class="nav-text">Read the RPCs in DIMAP format</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Run-the-adjustment"><span class="nav-number">3.2.2.</span> <span class="nav-text">Run the adjustment</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-Surface-reconstruction"><span class="nav-number">3.3.</span> <span class="nav-text">3.Surface reconstruction</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Method-1-Matching-in-object-geometry"><span class="nav-number">3.3.1.</span> <span class="nav-text">Method 1: Matching in object geometry</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Create-a-grayshaded-DSM"><span class="nav-number">3.3.1.1.</span> <span class="nav-text">Create a grayshaded DSM</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Generate-an-orthophotmap"><span class="nav-number">3.3.1.2.</span> <span class="nav-text">Generate an orthophotmap</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Method2-Multiview-matching-in-image-geometry-and-fusion"><span class="nav-number">3.3.2.</span> <span class="nav-text">Method2: Multiview matching in image geometry and fusion</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Do-two-per-triplet-image-matching"><span class="nav-number">3.3.2.1.</span> <span class="nav-text">Do two per-triplet image matching</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Transform-the-depth-maps-to-a-common-coordinate-frame"><span class="nav-number">3.3.2.2.</span> <span class="nav-text">Transform the depth maps to a common coordinate frame</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Fuse-the-individual-depth-maps"><span class="nav-number">3.3.2.3.</span> <span class="nav-text">Fuse the individual depth maps</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Visualise-in-grayshade-and-export-to-ply"><span class="nav-number">3.3.2.4.</span> <span class="nav-text">Visualise in grayshade and export to ply</span></a></li></ol></li></ol></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Phil-Mao"
+      src="/images/apple-touch-icon.png">
+  <p class="site-author-name" itemprop="name">Phil-Mao</p>
+  <div class="site-description" itemprop="description">爱我所爱，行我所行，听从我心，无问西东</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">8</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">4</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">14</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/phil-mao" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;phil-mao" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="/mpoker0919@gmail.com" title="E-Mail → mpoker0919@gmail.com"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+  <div class="links-of-blogroll motion-element">
+    <div class="links-of-blogroll-title"><i class="fa fa-link fa-fw"></i>
+      Links
+    </div>
+    <ul class="links-of-blogroll-list">
+        <li class="links-of-blogroll-item">
+          <a href="https://blog.csdn.net/Bit_Leg?spm=1000.2115.3001.5343" title="https:&#x2F;&#x2F;blog.csdn.net&#x2F;Bit_Leg?spm&#x3D;1000.2115.3001.5343" rel="noopener" target="_blank">CSDN</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://space.bilibili.com/395143448" title="https:&#x2F;&#x2F;space.bilibili.com&#x2F;395143448" rel="noopener" target="_blank">bilibili</a>
+        </li>
+    </ul>
+  </div>
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Phil-Mao</span>
+</div>
+
+<!--
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://pisces.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> 强力驱动
+  </div>-->
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

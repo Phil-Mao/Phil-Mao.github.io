@@ -1,6 +1,113 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>Git常用指令</title>
+    <url>/2022/03/13/Git%E5%B8%B8%E7%94%A8%E6%8C%87%E4%BB%A4/</url>
+    <content><![CDATA[<p>git常用指令集合</p>
+<h3 id="GIT-BASICS"><a href="#GIT-BASICS" class="headerlink" title="GIT BASICS"></a>GIT BASICS</h3><ul>
+<li><strong>git init</strong><br>在指定的⽬录下创建⼀个空的git repo。不带参数将在当前⽬录下创建⼀个git repo。</li>
+<li><strong>git clone <repo></strong><br>克隆⼀个指定repo到本地。指定的repo可以是本地⽂件系统或者由HTTP或SSH指定的远程路径。</li>
+<li><strong>git config user.name <code>&lt;name&gt;</code></strong><br>针对当前repo配置⽤户名。使⽤–global参数将配置全局⽤户名。</li>
+<li><strong>git add <code>&lt;directory&gt;</code></strong><br>将指定⽬录的所有修改加⼊到下⼀次commit中。把<code>&lt;directory&gt;</code>替换成<code>&lt;file&gt;</code>将添加指定⽂件的修改。</li>
+<li><strong>git commit -m <code>&quot;&lt;message&gt;&quot;</code></strong><br>提交暂存区的修改，使⽤指定的<code>&lt;message&gt;</code>作为提交信息，⽽不是打开⽂本编辑器输⼊提交信息。</li>
+<li><strong>git status</strong><br>显示哪些⽂件已被staged、未被staged以及未跟踪(untracked)。</li>
+<li><strong>git log</strong><br>以缺省格式显示全部commit历史。更多⾃定义参数请参考后续部分。键盘<code>q</code>退出。</li>
+</ul>
+<h3 id="GIT-DIFF"><a href="#GIT-DIFF" class="headerlink" title="GIT DIFF"></a>GIT DIFF</h3><ul>
+<li><strong>git diff</strong><br>⽐较⼯作区和暂存区的修改。</li>
+<li><strong>git diff HEAD</strong><br>⽐较⼯作区和上⼀次commit后的修改。</li>
+<li><strong>git diff –cached</strong><br>⽐较暂存区和上⼀次commit后的修改。</li>
+</ul>
+<h3 id="UNDOING-CHANGES"><a href="#UNDOING-CHANGES" class="headerlink" title="UNDOING CHANGES"></a>UNDOING CHANGES</h3><ul>
+<li><strong>git revert <code>&lt;commit&gt;</code></strong><br>对指定<code>&lt;commit&gt;</code>创建的一个undo的commit，并应用到当前分支</li>
+<li><strong>git reset <code>&lt;file&gt;</code></strong><br>将<code>&lt;file&gt;</code>从暂存区移除，但保持工作区不变。此操作不会修改工作区的任何文件。</li>
+</ul>
+<h3 id="REWRITING-GIT-HISTORY"><a href="#REWRITING-GIT-HISTORY" class="headerlink" title="REWRITING GIT HISTORY"></a>REWRITING GIT HISTORY</h3><ul>
+<li><strong>git oommit -m <code>&lt;message&gt;</code> –amend</strong><br>将当前staged修改合并到最近一次的commit中。</li>
+<li><strong>git rebase <code>&lt;base&gt;</code></strong><br>基于<code>&lt;base&gt;</code>对当前分支进行rebase。<code>&lt;base&gt;</code>可以是commit、分支名称、tag或相对于HEAD的commit.</li>
+<li><strong>git reflog</strong><br>显示本地repo的所有commit日志。</li>
+</ul>
+<h3 id="GIT-BRANCHES"><a href="#GIT-BRANCHES" class="headerlink" title="GIT BRANCHES"></a>GIT BRANCHES</h3><ul>
+<li><strong>git branch</strong><br>显示本地repo的所有分支</li>
+<li><strong>git switch -c <code>&lt;branch&gt;</code></strong><br>创建并切换到一个新的名为<code>&lt;branch&gt;</code>的分支。去掉参数-c将切换到一个已有的分支。</li>
+<li><strong>git merge <code>&lt;branch&gt;</code></strong><br>将指定<code>&lt;branch&gt;</code>分⽀合并到当前分⽀。</li>
+</ul>
+<h3 id="REMOTE-REPOSITORIES"><a href="#REMOTE-REPOSITORIES" class="headerlink" title="REMOTE REPOSITORIES"></a>REMOTE REPOSITORIES</h3><ul>
+<li><strong>git remote add <code>&lt;name&gt;</code> <code>&lt;url&gt;</code></strong><br>添加一个新的远程连接。添加后可以使用<code>&lt;name&gt;</code>作为指定<code>&lt;url&gt;</code>远程连接的名称。</li>
+<li><strong>git fetch <code>&lt;remote&gt;</code> <code>&lt;branch&gt;</code></strong><br>从指定<code>&lt;remote&gt;</code>抓取指定<code>&lt;branch&gt;</code>的所有commit到本地repo。去掉<code>&lt;branch&gt;</code>将抓取远程所有分⽀的修改。</li>
+<li><strong>git pull <code>&lt;remote&gt;</code></strong><br>从指定<code>&lt;remote&gt;</code>抓取所有分支的commit并立刻合并到本地repo。</li>
+<li><strong>git push <code>&lt;remote&gt;</code> <code>&lt;branch&gt;</code></strong><br>将本地指定<code>&lt;branch&gt;</code>推送到指定远程<code>&lt;remote&gt;</code>。如果远程没有对应的分⽀，将⾃动在远程创建此分⽀。</li>
+</ul>
+<h3 id="GIT-CONFIG"><a href="#GIT-CONFIG" class="headerlink" title="GIT CONFIG"></a>GIT CONFIG</h3><ul>
+<li><strong>git config –global user.name <code>&lt;name&gt;</code></strong><br>配置当前⽤户名，使⽤–global参数将针对当前系统登录⽤户⽣效。</li>
+<li><strong>git config –global user.email <code>&lt;email&gt;</code></strong><br>配置当前⽤户Email。</li>
+<li><strong>git config –global alias. <code>&lt;alias-name&gt;</code> <code>&lt;git-command&gt;</code></strong><br>配置⼀个git命令的快捷⽅式。例如：配置”alias.glog log –graph –oneline”使”git glog”相当于”git log –graph –oneline”。</li>
+<li><strong>git config –system core.editor <code>&lt;editor&gt;</code></strong><br>配置⽂本编辑器，例如vi，在必要时⾃动打开此⽂本编辑器。</li>
+<li><strong>git config –global –edit</strong><br>打开当前⽤户的git全局配置并编辑。</li>
+</ul>
+<h3 id="GIT-LOG"><a href="#GIT-LOG" class="headerlink" title="GIT LOG"></a>GIT LOG</h3><ul>
+<li><strong>git log -<code>&lt;limit&gt;</code></strong><br>限制log的显示数量。例如：”git log -5”仅显示最新5条commit。</li>
+<li><strong>git log –online</strong><br>每行显示一条commit。</li>
+<li><strong>git log –author&#x3D;”<code>&lt;pattern&gt;</code>“</strong><br>按提交者名字搜索并显示commit。</li>
+<li><strong>git log –grep&#x3D;”<code>&lt;pattern&gt;</code>“</strong><br>按指定内容搜索并显示commit。</li>
+<li><strong>git log <code>&lt;since&gt;</code>..<code>&lt;until&gt;</code></strong><br>显示指定范围的commit。范围参数可以是commit ID、分⽀名称、HEAD或任意相对位置。</li>
+<li><strong>git log – <code>&lt;file&gt;</code></strong><br>仅显示包含指定文件修改的commit。</li>
+<li><strong>git log –graph</strong><br>使用–graph参数显示图形化的branch信息。</li>
+</ul>
+<h3 id="GIT-RESET"><a href="#GIT-RESET" class="headerlink" title="GIT RESET"></a>GIT RESET</h3><ul>
+<li><strong>git reset</strong><br>移除所有暂存区的修改，但不会修改⼯作区。</li>
+<li><strong>git reset –hard</strong><br>移除所有暂存区的修改， 并强制删除所有工作区的修改。</li>
+<li><strong>git reset <code>&lt;commit&gt;</code></strong><br>将当前分支回滚到指定<code>&lt;commit&gt;</code>，清暂存区的修改，但保持工作区状态不变。</li>
+<li><strong>git reset –hard <code>&lt;commit&gt;</code></strong><br>将当前分⽀回滚到指定<code>&lt;commit&gt;</code>，清除暂存区的修改，并强制删除所有⼯作区的修改。</li>
+</ul>
+<h3 id="GIT-REBASE"><a href="#GIT-REBASE" class="headerlink" title="GIT REBASE"></a>GIT REBASE</h3><ul>
+<li><strong>git rebase -i <code>&lt;base&gt;</code></strong><br>以交互模式对当前分支做rebase。</li>
+</ul>
+<h3 id="GIT-PULL"><a href="#GIT-PULL" class="headerlink" title="GIT PULL"></a>GIT PULL</h3><ul>
+<li><strong>git pull –rebase <code>&lt;remote&gt;</code></strong><br>抓取所有远程分⽀，并以rebase模式并⼊本地repo⽽不是merge。</li>
+</ul>
+<h3 id="GIT-PUSH"><a href="#GIT-PUSH" class="headerlink" title="GIT PUSH"></a>GIT PUSH</h3><ul>
+<li><strong>git push <code>&lt;remote&gt;</code> –force</strong><br>将本地分支推送到远程。不要使用–force参数，除非完全明白这个操作。</li>
+<li><strong>git push <code>&lt;remote&gt;</code> –tags</strong><br>使⽤push命令并不会⾃动将本地tag推送到远程。加上–tags参数会将所有本地tag推送到远程。</li>
+</ul>
+]]></content>
+      <categories>
+        <category>编程开发</category>
+      </categories>
+      <tags>
+        <tag>Git</tag>
+        <tag>经验分享</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Linux下编译DCNv2</title>
+    <url>/2022/03/08/Linux%E4%B8%8B%E7%BC%96%E8%AF%91DCNv2/</url>
+    <content><![CDATA[<p>最近需要编译一下DCN这个网络，使用<code>conda</code> 管理依赖库是真的方便，需要的东西往里放，只要版本之间不冲突，对编译代码十分友好。</p>
+<h1 id="配置"><a href="#配置" class="headerlink" title="配置"></a>配置</h1><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">GPU：RTX 3080</span><br><span class="line">系统： Linux Mint 20.1 Cinnamon 4.8.6</span><br><span class="line">Cuda: 11.1</span><br><span class="line">Pytorch: 1.8.1</span><br></pre></td></tr></table></figure>
+<h1 id="运行环境"><a href="#运行环境" class="headerlink" title="运行环境"></a>运行环境</h1><p>根据需要的依赖库下载对应的conda环境，这里提供我自己使用的conda 环境下载地址，其实有很多依赖库是用不着的：<br><code>https://github.com/Phil-Mao/AnacondaRecipies/tree/master/_environments</code><br>Clone之后，创建一个conda环境：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">conda env create -n mvs -f _environments/mvs.fixed.yml</span><br></pre></td></tr></table></figure>
+<p>激活<code>mvs</code>环境，<code>conda activate mvs</code>:<br><img src="https://img-blog.csdnimg.cn/727d92022b3541bd9d52b998f174532a.png?x-oss-process=image/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBAQml0X0xlZw==,size_20,color_FFFFFF,t_70,g_se,x_16" alt="激活mvs"></p>
+<h1 id="DCNv2-latest"><a href="#DCNv2-latest" class="headerlink" title="DCNv2-latest"></a>DCNv2-latest</h1><p>这里我用的是一个比较新的版本：<br><a href="https://github.com/jinfagang/DCNv2_latest">https://github.com/jinfagang/DCNv2_latest</a></p>
+<h1 id="编译"><a href="#编译" class="headerlink" title="编译"></a>编译</h1><p>这里需要指定<code>cuda</code>对应版本安装的位置：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">set CUDA_HOME=/usr/local/cuda-11.1</span><br></pre></td></tr></table></figure>
+<p>一键编译：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">python setup.py build develop</span><br></pre></td></tr></table></figure>
+<p><img src="https://img-blog.csdnimg.cn/c6554a0bc99c4a0c94e2fb9e9de4880a.png" alt="compile"><br>编译成功：<br><img src="https://img-blog.csdnimg.cn/2e522537473c4acea0607e9bfdb3ae87.png?x-oss-process=image/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBAQml0X0xlZw==,size_20,color_FFFFFF,t_70,g_se,x_16" alt="end"><br>编译后生成的文件：<br><img src="https://img-blog.csdnimg.cn/786eb166867e464e9dc69963c0ec2d46.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBAQml0X0xlZw==,size_19,color_FFFFFF,t_70,g_se,x_16" alt="编译完成"><br>build完之后，目前只是在当前文件夹下有.so文件，现在我们需要把他装载到我们的环境里面，这里直接运行</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">python setup.py install</span><br></pre></td></tr></table></figure>
+<p>在当前的<code>conda</code>环境里进行第三方库的安装：<br><img src="https://img-blog.csdnimg.cn/050642bff12446f99a5d065898f52e96.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBAQml0X0xlZw==,size_20,color_FFFFFF,t_70,g_se,x_16" alt="安装到虚拟环境中"><br>可以看到编译好的<code>DCNv2</code>被安装在了 <code>conda</code> 环境下的包管理目录下，激活环境：<br><img src="https://img-blog.csdnimg.cn/13c6a6fb8fe54f87a3f5e1b27c2be010.png" alt="成功安装"><br>至此，<code>DCNv2</code>的编译和安装就已经完成了。</p>
+]]></content>
+      <categories>
+        <category>编程开发</category>
+      </categories>
+      <tags>
+        <tag>经验分享</tag>
+        <tag>Linux</tag>
+        <tag>C++</tag>
+        <tag>DCN</tag>
+        <tag>Conda</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Markdown基本用法</title>
     <url>/2022/03/10/Markdown%E5%9F%BA%E6%9C%AC%E7%94%A8%E6%B3%95/</url>
     <content><![CDATA[<!-- <script src="https://cdn.bootcdn.net/ajax/libs/mathjax/2.7.7/MathJax.js?config=TeX-MML-AM_CHTML"></script> -->
@@ -137,27 +244,27 @@
 </tr>
 </tbody></table>
 <h2 id="LaTeX数学公式"><a href="#LaTeX数学公式" class="headerlink" title="LaTeX数学公式"></a>LaTeX数学公式</h2><ul>
-<li>使用LaTeX数学公式，<a href="https://katex.org/docs/api.html">参考网址</a><br>Gamma公式展示<br><img src="/images/latex.png" alt="latex"></li>
+<li>使用LaTeX数学公式，<a href="https://katex.org/docs/api.html">参考网址</a><br>Gamma公式展示<br><img src="https://gitee.com/maoshunfu/blogimages/raw/master/img/latex.png"></li>
 </ul>
 <h2 id="制图-Mermaid"><a href="#制图-Mermaid" class="headerlink" title="制图-Mermaid"></a>制图-Mermaid</h2><ul>
 <li>插入甘特图，<a href="https://mermaid-js.github.io/mermaid/#/gantt">参考网址</a></li>
 </ul>
-<p><img src="/images/gantt.png" alt="gantt"></p>
+<p><img src="https://gitee.com/maoshunfu/blogimages/raw/master/img/gantt.png"></p>
 <ul>
 <li>插入UML图，<a href="https://mermaid-js.github.io/mermaid/#/sequenceDiagram">参考网址</a></li>
 </ul>
-<p><img src="/images/uml.png" alt="uml"></p>
+<p><img src="https://gitee.com/maoshunfu/blogimages/raw/master/img/uml.png"></p>
 <ul>
 <li>插入流程图，<a href="https://mermaid-js.github.io/mermaid/#/flowchart?id=graph">参考网址</a></li>
 </ul>
-<p><img src="/images/flowchart.png" alt="flowchart"></p>
+<p><img src="https://gitee.com/maoshunfu/blogimages/raw/master/img/flowchart.png"></p>
 <ul>
 <li><p>插入Flowchart流程图，<a href="http://flowchart.js.org/">参考网址</a></p>
 </li>
 <li><p>插入classDiagram类图，<a href="https://mermaid-js.github.io/mermaid/#/classDiagram">参考网址</a></p>
 </li>
 </ul>
-<p><img src="/images/classDiagram.png" alt="classDiagram"></p>
+<p><img src="https://gitee.com/maoshunfu/blogimages/raw/master/img/classDiagram.png"></p>
 ]]></content>
       <categories>
         <category>常用工具</category>
@@ -166,6 +273,51 @@
         <tag>经验分享</tag>
         <tag>Markdown</tag>
         <tag>论文写作</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Windows下配置Mingw64和MSYS2环境</title>
+    <url>/2022/03/08/Windows%E4%B8%8B%E9%85%8D%E7%BD%AEMingw64%E5%92%8CMSYS2%E7%8E%AF%E5%A2%83/</url>
+    <content><![CDATA[<h2 id="下载MSYS2"><a href="#下载MSYS2" class="headerlink" title="下载MSYS2"></a>下载MSYS2</h2><p>MSYS2是一组工具和库，提供一个易于使用的环境，用于构建、安装和运行本地 Windows 软件。下载地址：<a href="https://www.msys2.org/">MSYS2 latest 下载地址</a></p>
+<h2 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h2><p>官网有详细的安装步骤，这里不再赘述，参考<a href="https://www.msys2.org/">安装手册</a></p>
+<h2 id="更换国内镜像源"><a href="#更换国内镜像源" class="headerlink" title="更换国内镜像源"></a>更换国内镜像源</h2><p>在安装新包之前，建议把MSYS2使用的镜像源换成国内源。默认路径安装的话，需要修改的文件在 <code>C:\msys64\etc\pacman.d</code> 文件夹内，把<code>mirrorlist.clang32</code>、<code>mirrorlist.clang64</code> 等7个文件进行如下修改：<br><img src="https://img-blog.csdnimg.cn/cb5f817ca63c4a16b3dea6f87e44d50d.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBAQml0X0xlZw==,size_20,color_FFFFFF,t_70,g_se,x_16" alt="修改前"></p>
+<p><img src="https://img-blog.csdnimg.cn/e716e870e2c04e9e9f389651f9ba8763.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBAQml0X0xlZw==,size_20,color_FFFFFF,t_70,g_se,x_16" alt="修改后"></p>
+<h2 id="安装新库"><a href="#安装新库" class="headerlink" title="安装新库"></a>安装新库</h2><p>接着就是按照编译的需要，安装相应的库文件</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">@REM Make sure start with ucrt64 msys2 environment</span><br><span class="line">pacman -Syu </span><br><span class="line">pacman -S mingw-w64-ucrt-x86_64-cmake --needed</span><br></pre></td></tr></table></figure>
+
+<p>安装新包时，选择带<code>ucrt</code>的包进行安装</p>
+<blockquote>
+<p>ucrt64：Visual Studio的新宠，全名是Universal C Runtime，用来替代前面mingw64&amp;w32里的msvcrt。ucrt不支持加载msvcrt的产物，因此老版本Windows（&lt;10）不能直接兼容基于它的软件。但是这不是无理由的激进，要知道msvcrt在当前开发环境里真的是让开发打哑谜，（原生）不支持C99，不支持UTF8</p>
+</blockquote>
+]]></content>
+      <categories>
+        <category>编程开发</category>
+      </categories>
+      <tags>
+        <tag>经验分享</tag>
+        <tag>Windows</tag>
+        <tag>Mingw</tag>
+        <tag>MSYS2</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Qt开发小技巧</title>
+    <url>/2022/03/08/Qt%E5%BC%80%E5%8F%91%E5%B0%8F%E6%8A%80%E5%B7%A7/</url>
+    <content><![CDATA[<h2 id="Qt"><a href="#Qt" class="headerlink" title="Qt"></a>Qt</h2><ol>
+<li>遇到 Qt 报错<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">qt.qpa.plugin: Could not find the Qt platform plugin &quot;windows&quot; in &quot;&quot;</span><br><span class="line">This application failed to start because no Qt platform plugin could be initialized. Reinstalling the application may fix this problem.</span><br></pre></td></tr></table></figure></li>
+</ol>
+<p>使用 qt 自带的<code>windeployqt.exe</code> 重新运行一下可执行文件，就OK 啦！</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">windeployqt ./$APP_NAME.exe</span><br></pre></td></tr></table></figure>
+<p>重新初始化一些qt的依赖库和显示窗口，就完事了。</p>
+]]></content>
+      <categories>
+        <category>编程开发</category>
+      </categories>
+      <tags>
+        <tag>经验分享</tag>
+        <tag>C++</tag>
+        <tag>Qt</tag>
+        <tag>Visual Studio</tag>
       </tags>
   </entry>
   <entry>
@@ -247,34 +399,6 @@
       </tags>
   </entry>
   <entry>
-    <title>Linux下编译DCNv2</title>
-    <url>/2022/03/08/Linux%E4%B8%8B%E7%BC%96%E8%AF%91DCNv2/</url>
-    <content><![CDATA[<p>最近需要编译一下DCN这个网络，使用<code>conda</code> 管理依赖库是真的方便，需要的东西往里放，只要版本之间不冲突，对编译代码十分友好。</p>
-<h1 id="配置"><a href="#配置" class="headerlink" title="配置"></a>配置</h1><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">GPU：RTX 3080</span><br><span class="line">系统： Linux Mint 20.1 Cinnamon 4.8.6</span><br><span class="line">Cuda: 11.1</span><br><span class="line">Pytorch: 1.8.1</span><br></pre></td></tr></table></figure>
-<h1 id="运行环境"><a href="#运行环境" class="headerlink" title="运行环境"></a>运行环境</h1><p>根据需要的依赖库下载对应的conda环境，这里提供我自己使用的conda 环境下载地址，其实有很多依赖库是用不着的：<br><code>https://github.com/Phil-Mao/AnacondaRecipies/tree/master/_environments</code><br>Clone之后，创建一个conda环境：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">conda env create -n mvs -f _environments/mvs.fixed.yml</span><br></pre></td></tr></table></figure>
-<p>激活<code>mvs</code>环境，<code>conda activate mvs</code>:<br><img src="https://img-blog.csdnimg.cn/727d92022b3541bd9d52b998f174532a.png?x-oss-process=image/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBAQml0X0xlZw==,size_20,color_FFFFFF,t_70,g_se,x_16" alt="激活mvs"></p>
-<h1 id="DCNv2-latest"><a href="#DCNv2-latest" class="headerlink" title="DCNv2-latest"></a>DCNv2-latest</h1><p>这里我用的是一个比较新的版本：<br><a href="https://github.com/jinfagang/DCNv2_latest">https://github.com/jinfagang/DCNv2_latest</a></p>
-<h1 id="编译"><a href="#编译" class="headerlink" title="编译"></a>编译</h1><p>这里需要指定<code>cuda</code>对应版本安装的位置：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">set CUDA_HOME=/usr/local/cuda-11.1</span><br></pre></td></tr></table></figure>
-<p>一键编译：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">python setup.py build develop</span><br></pre></td></tr></table></figure>
-<p><img src="https://img-blog.csdnimg.cn/c6554a0bc99c4a0c94e2fb9e9de4880a.png" alt="compile"><br>编译成功：<br><img src="https://img-blog.csdnimg.cn/2e522537473c4acea0607e9bfdb3ae87.png?x-oss-process=image/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBAQml0X0xlZw==,size_20,color_FFFFFF,t_70,g_se,x_16" alt="end"><br>编译后生成的文件：<br><img src="https://img-blog.csdnimg.cn/786eb166867e464e9dc69963c0ec2d46.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBAQml0X0xlZw==,size_19,color_FFFFFF,t_70,g_se,x_16" alt="编译完成"><br>build完之后，目前只是在当前文件夹下有.so文件，现在我们需要把他装载到我们的环境里面，这里直接运行</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">python setup.py install</span><br></pre></td></tr></table></figure>
-<p>在当前的<code>conda</code>环境里进行第三方库的安装：<br><img src="https://img-blog.csdnimg.cn/050642bff12446f99a5d065898f52e96.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBAQml0X0xlZw==,size_20,color_FFFFFF,t_70,g_se,x_16" alt="安装到虚拟环境中"><br>可以看到编译好的<code>DCNv2</code>被安装在了 <code>conda</code> 环境下的包管理目录下，激活环境：<br><img src="https://img-blog.csdnimg.cn/13c6a6fb8fe54f87a3f5e1b27c2be010.png" alt="成功安装"><br>至此，<code>DCNv2</code>的编译和安装就已经完成了。</p>
-]]></content>
-      <categories>
-        <category>编程开发</category>
-      </categories>
-      <tags>
-        <tag>经验分享</tag>
-        <tag>Linux</tag>
-        <tag>C++</tag>
-        <tag>DCN</tag>
-        <tag>Conda</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>科研论文写作技巧</title>
     <url>/2022/03/08/%E7%A7%91%E7%A0%94%E8%AE%BA%E6%96%87%E5%86%99%E4%BD%9C%E6%8A%80%E5%B7%A7/</url>
     <content><![CDATA[<h2 id="文献检索途径"><a href="#文献检索途径" class="headerlink" title="文献检索途径"></a>文献检索途径</h2><ol>
@@ -313,127 +437,306 @@
       </tags>
   </entry>
   <entry>
-    <title>Qt开发小技巧</title>
-    <url>/2022/03/08/Qt%E5%BC%80%E5%8F%91%E5%B0%8F%E6%8A%80%E5%B7%A7/</url>
-    <content><![CDATA[<h2 id="Qt"><a href="#Qt" class="headerlink" title="Qt"></a>Qt</h2><ol>
-<li>遇到 Qt 报错<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">qt.qpa.plugin: Could not find the Qt platform plugin &quot;windows&quot; in &quot;&quot;</span><br><span class="line">This application failed to start because no Qt platform plugin could be initialized. Reinstalling the application may fix this problem.</span><br></pre></td></tr></table></figure></li>
-</ol>
-<p>使用 qt 自带的<code>windeployqt.exe</code> 重新运行一下可执行文件，就OK 啦！</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">windeployqt ./$APP_NAME.exe</span><br></pre></td></tr></table></figure>
-<p>重新初始化一些qt的依赖库和显示窗口，就完事了。</p>
-]]></content>
-      <categories>
-        <category>编程开发</category>
-      </categories>
-      <tags>
-        <tag>经验分享</tag>
-        <tag>C++</tag>
-        <tag>Qt</tag>
-        <tag>Visual Studio</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Windows下配置Mingw64和MSYS2环境</title>
-    <url>/2022/03/08/Windows%E4%B8%8B%E9%85%8D%E7%BD%AEMingw64%E5%92%8CMSYS2%E7%8E%AF%E5%A2%83/</url>
-    <content><![CDATA[<h2 id="下载MSYS2"><a href="#下载MSYS2" class="headerlink" title="下载MSYS2"></a>下载MSYS2</h2><p>MSYS2是一组工具和库，提供一个易于使用的环境，用于构建、安装和运行本地 Windows 软件。下载地址：<a href="https://www.msys2.org/">MSYS2 latest 下载地址</a></p>
-<h2 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h2><p>官网有详细的安装步骤，这里不再赘述，参考<a href="https://www.msys2.org/">安装手册</a></p>
-<h2 id="更换国内镜像源"><a href="#更换国内镜像源" class="headerlink" title="更换国内镜像源"></a>更换国内镜像源</h2><p>在安装新包之前，建议把MSYS2使用的镜像源换成国内源。默认路径安装的话，需要修改的文件在 <code>C:\msys64\etc\pacman.d</code> 文件夹内，把<code>mirrorlist.clang32</code>、<code>mirrorlist.clang64</code> 等7个文件进行如下修改：<br><img src="https://img-blog.csdnimg.cn/cb5f817ca63c4a16b3dea6f87e44d50d.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBAQml0X0xlZw==,size_20,color_FFFFFF,t_70,g_se,x_16" alt="修改前"></p>
-<p><img src="https://img-blog.csdnimg.cn/e716e870e2c04e9e9f389651f9ba8763.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBAQml0X0xlZw==,size_20,color_FFFFFF,t_70,g_se,x_16" alt="修改后"></p>
-<h2 id="安装新库"><a href="#安装新库" class="headerlink" title="安装新库"></a>安装新库</h2><p>接着就是按照编译的需要，安装相应的库文件</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">@REM Make sure start with ucrt64 msys2 environment</span><br><span class="line">pacman -Syu </span><br><span class="line">pacman -S mingw-w64-ucrt-x86_64-cmake --needed</span><br></pre></td></tr></table></figure>
-
-<p>安装新包时，选择带<code>ucrt</code>的包进行安装</p>
+    <title>micmac实验</title>
+    <url>/2022/03/13/micmac%E5%AE%9E%E9%AA%8C/</url>
+    <content><![CDATA[<h1 id="micmac-satellite-example"><a href="#micmac-satellite-example" class="headerlink" title="micmac-satellite_example"></a>micmac-satellite_example</h1><p>Process small satellite images with an open-source software: <code>MicMac</code></p>
+<h1 id="Prepare"><a href="#Prepare" class="headerlink" title="Prepare"></a>Prepare</h1><ul>
+<li><p><a href="https://micmac.ensg.eu/index.php/Install_MicMac_Windows">MicMac</a></p>
+</li>
+<li><p><a href="%5Bhttps://drive.google.com/uc?id=18hmQL5kIqhcnR5ahp8IUsMZxLv7jvjgB%5D">Sample data</a></p>
 <blockquote>
-<p>ucrt64：Visual Studio的新宠，全名是Universal C Runtime，用来替代前面mingw64&amp;w32里的msvcrt。ucrt不支持加载msvcrt的产物，因此老版本Windows（&lt;10）不能直接兼容基于它的软件。但是这不是无理由的激进，要知道msvcrt在当前开发环境里真的是让开发打哑谜，（原生）不支持C99，不支持UTF8</p>
+<p><em>I installed the MicMac on Windows, users can install it either on Ubuntu or Windows.</em></p>
 </blockquote>
+</li>
+</ul>
+<p><strong><em>The dataset consists of:</em></strong></p>
+<ul>
+<li>4 images (tif)</li>
+<li>4 corresponding RPCs (xml)</li>
+<li><em>WGS84toUTM.xml</em> with the definition of a projection coordinate system (proj4 format)</li>
+</ul>
+<p><strong><em>The dataset:</em></strong> </p>
+<p><img src="https://gitee.com/maoshunfu/blogimages/raw/master/img/dataset.png" alt="dataset"></p>
+<h1 id="Process"><a href="#Process" class="headerlink" title="Process"></a>Process</h1><p>In this project, I installed the MicMac in miniconda’s virtual environment. First, activate my env, then you can check the MicMac with <code>mm3d</code>, like this:</p>
+<p><img src="https://gitee.com/maoshunfu/blogimages/raw/master/img/activate.png"></p>
+<h2 id="1-Extract-SIFT-tie-points"><a href="#1-Extract-SIFT-tie-points" class="headerlink" title="1. Extract SIFT tie-points"></a>1. Extract SIFT tie-points</h2><ul>
+<li><p><strong>computation strategy:</strong> there exist several predefined strategies to compute tie-points: <code>Line</code>, <code>All</code>, <code>MulScale</code>, <code>File</code>. We will use the <code>All</code> strategy where tie-points are searched between all possible pairs. Refer to MicMac documentation for the other modes.</p>
+</li>
+<li><p><strong>image resolution:</strong> tie-points extraction is very costly, and to limit the computation time we usually downsampled the images; in this example, indicate resolution of <code>-1</code> which means full-resolution images; otherwise, if set to, e.g., <code>2000</code>, the images will be downsampled such that the larger image dimension (typically the width) will have <code>2000</code> pixels; the other dimension will have a size that is proportionally smaller.</p>
+</li>
+<li><p><strong>ExpTxt&#x3D;1:</strong> the extracted tie-points will be saved in a text format (as opossed to the default dat format).</p>
+</li>
+<li><p><strong>results:</strong> tie-points are stored in the <code>Homol</code> directory. For instance, tie-points correponding to image <code>Im1.tif</code> will be stored in <code>Homol/PastisIm1.tif/</code> directory. If <code>Im1.tif</code> overlaps with <code>Im2.tif</code> and <code>Im3.tif</code>, their tie-points will be stored in <code>Homol/PastisIm1.tif/Im2.tif.dat</code> and <code>Homol/PastisIm1.tif/Im3.tif.dat</code>, respectively. If you chose to export in the text format, the dat extension will be replaced with <code>txt</code>.</p>
+</li>
+</ul>
+<p><em>Note: Intermediary results are stored in the <code>Pastis</code> directory. It takes a significant amount of space and is not used at later processing stages, therefore you may delete it.</em>     </p>
+<hr>
+<p><strong>–&gt;Start with this:</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">mm3d Tapioca All .*tif -1 ExpTxt=1 @ExitOnBrkp</span><br></pre></td></tr></table></figure>
+<p><img src="https://gitee.com/maoshunfu/blogimages/raw/master/img/Tapioca.png"></p>
+<p><em>Here is the directory:</em></p>
+<p><img src="https://gitee.com/maoshunfu/blogimages/raw/master/img/Tapioca_out.png"></p>
+<h2 id="2-RPC-bundle-adjustment"><a href="#2-RPC-bundle-adjustment" class="headerlink" title="2. RPC-bundle adjustment"></a>2. RPC-bundle adjustment</h2><h3 id="Read-the-RPCs-in-DIMAP-format"><a href="#Read-the-RPCs-in-DIMAP-format" class="headerlink" title="Read the RPCs in DIMAP format"></a>Read the RPCs in DIMAP format</h3><p>This function reads the DIMAP format RPCs and converts it to a MicMac format. Several parameters are specified here:  </p>
+<ul>
+<li><p><code>(.*).tif</code> this is the pattern of input images (note the dot preceding the star which is the posix convention)</p>
+</li>
+<li><p><code>\$1.xml</code> is the corresponding pattern of RPC files; I use here a regular expression that associates the image name with its corresponding RPC file name; you may also run the command independently for each image if you’re not familiar with regular expressions;</p>
+</li>
+<li><p><code>RPC-d0</code> is the directory name where the converted files will be stored; it will serve as input in the following step, i.e., the bundle adjustment;</p>
+</li>
+<li><p><code>Degre=0</code>, the degree of the polynomial correction;</p>
+</li>
+</ul>
+<blockquote>
+<p>By choosing a zero-degree polynomial we will correct the satellite’s geolocalisation by modelling a 3D image shift.</p>
+</blockquote>
+<ul>
+<li><code>ChSys=WGS84toUTM.xml</code> definition of the projection coordinate sytem; MicMac expects that the processing coordinate frame is euclidean and all three coordinates have the same unit. The RPCs are expressed in geographical coordinates which are neither euclidean, nor unique in terms of units. To overcome that, MicMac will transfer, on the fly, the RPCs to a user-defined coordinate system, in this exemple defined in the <code>WGS84toUTM.xml</code> file. The definition of the coordinate system follows the <code>proj4</code> library convention. You can retrieve the code corresponding to the coordinate frame of your interest from <code>https://spatialreference.org/</code></li>
+</ul>
+<p><strong>–&gt;Then,</strong></p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">mm3d Convert2GenBundle &quot;(.*).tif&quot; &quot;\$1.xml&quot; RPC-d0 ChSys=WGS84toUTM.xml Degre=0  @ExitOnBrkp</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://gitee.com/maoshunfu/blogimages/raw/master/img/Convert2GenBundle_cmd.png"></p>
+<hr>
+<p><em>This step creates a new folder <code>Ori-RPC-d0</code>, it includes 8 files:</em></p>
+<p><img src="https://gitee.com/maoshunfu/blogimages/raw/master/img/Convert2GenBundle.png"></p>
+<hr>
+<h3 id="Run-the-adjustment"><a href="#Run-the-adjustment" class="headerlink" title="Run the adjustment"></a>Run the adjustment</h3><p>The input parameters:</p>
+<ul>
+<li><p><code>RPC-d0</code> is the folder with the initial geolocalisation</p>
+</li>
+<li><p><code>RPC-d0_adj</code> is the folder where the adjusted geoloc is saved</p>
+</li>
+<li><p><code>ExpTxt=1</code> indicates that tie-points are stored in text format</p>
+</li>
+</ul>
+<p><strong>–&gt;Next,</strong>  </p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">mm3d Campari &quot;.*tif&quot; RPC-d0 RPC-d0-adj ExpTxt=1 @ExitOnBrkp</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://gitee.com/maoshunfu/blogimages/raw/master/img/Campari.png"><br><img src="https://gitee.com/maoshunfu/blogimages/raw/master/img/Bundle.png">  </p>
+<hr>
+<p>One way to asses the quality of the adjustment is to look at the tie-points residual (for more sophisticated quality estimates see <code>MMTestOrient</code> in MicMac documentation).<br>The bundle adjustment is carried out in several iterations. Let’s look at image TPMM_0435.tif in the last iteration:</p>
+<blockquote>
+<p>RES:[TPMM_0435.tif][g] ER2 0.24636 Nn 100 Of 11753 Mul 5171 Mul-NN 5171 Time 1.15821</p>
+</blockquote>
+<ul>
+<li><p><code>0.24636</code> pixels is the mean residual calculated over all tie-points (i.e.,  <em>σ</em>  of the bundle)</p>
+</li>
+<li><p><code>Nn 100</code> means that 100 %  of tie-points were considered as inliers</p>
+</li>
+<li><p><code>11753</code> there were as many tie-points found</p>
+</li>
+<li><p><code>5171</code> there were as many multiple tie-points found (out of the <code>11753</code>), i.e., tie-points observed in at least 3 images;</p>
+</li>
+</ul>
+<p><em>Now, the directory:</em></p>
+<p><img src="https://gitee.com/maoshunfu/blogimages/raw/master/img/Campari_out.png"></p>
+<hr>
+<h2 id="3-Surface-reconstruction"><a href="#3-Surface-reconstruction" class="headerlink" title="3.Surface reconstruction"></a>3.Surface reconstruction</h2><p>We will now calculate the surface with the semi-global dense image matching [Deseilligny &amp; Paparoditis, 2006].</p>
+<blockquote>
+<p>Deseilligny, M. and Paparoditis, N., 2006. A multiresolution and optimization-based image matching approach: An application to surface reconstruction from SPOT5-HRS stereo imagery. Archives of Photogrammetry, Remote Sensing and Spatial Information Sciences, 36(1&#x2F;W41), pp.1-5.</p>
+</blockquote>
+<h3 id="Method-1-Matching-in-object-geometry"><a href="#Method-1-Matching-in-object-geometry" class="headerlink" title="Method 1: Matching in object geometry"></a>Method 1: Matching in object geometry</h3><p>The computation will be carried out in the so-called terrain geometry, where the optimization is defined in the <code>(X,Y)</code> of the object space, and we are looking for the most optimal <code>Z</code>-coordinates (see Figure below). This geometry is well adapted to 2.5D surface computation. </p>
+<p><img src="https://gitee.com/maoshunfu/blogimages/raw/master/img/terrain-geom.jpg"></p>
+<hr>
+<p>The input parameters are:</p>
+<ul>
+<li><p><code>UrbanMNE</code> is a predefined term and it defines a number of processing parameters (e.g., low regularization, small matching wodows, terrain geometry)</p>
+</li>
+<li><p><code>.*tif</code> is the image set that will be used in the processing</p>
+</li>
+<li><p><code>RPC-d0-adj</code> is the name of the directory containing the geoloclisation</p>
+</li>
+<li><p><code>SzW=2</code> defines the matching window size, i.e., with size set to 2, the window size is <code>5x5</code></p>
+</li>
+<li><p><code>Regul</code> is the regularization term  α ; in <code>UrbanMNE</code> it is by default set to 0.02 becase in urban zones we’re typically interested in reconstructing fine details; the dataset used in this example, however, represents a smooth surface so we’re just fine with a more agressive regularization; moreover, our images are quite noisy and by adding more regularization we will avoid noisy surface reconstructions;</p>
+</li>
+<li><p><code>DoOrtho=1</code>, this parameters wil force MicMac to create individual orthomosaic, i.e., rectify each image; the rectified images are stored in <code>Ortho-MEC-Malt/Ort_*.tif</code>; to create the final orthophotomap we will still need to do mosaicing with <code>Tawny</code> (later in this tutorial);</p>
+</li>
+<li><p><code>NbVI=2</code> sets the necessary minimum number of images for MicMac to compute the surface; by default the value is set to 3 which means that in areas with only two overlapping images, the surface will not be computed;</p>
+</li>
+<li><p><code>EZA=1</code>, this parameter will force the output surface raster to save the Z-coordinates in their absolute values; without explicitly forcing MicMac to do that, to avoid having to store large values inside the raster tiff, it will apply a normalisation (normalisation parameters <code>OrigineAlti</code> and <code>ResolutionAlti</code> are to be found in the accompanying xml files);</p>
+</li>
+</ul>
+<p><strong>–&gt;Run below,</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">mm3d Malt UrbanMNE &quot;.*tif&quot; RPC-d0-adj SzW=2 Regul=0.2 DoOrtho=1 NbVI=2 EZA=1 @ExitOnBrkp</span><br></pre></td></tr></table></figure>
+<p><img src="https://gitee.com/maoshunfu/blogimages/raw/master/img/Malt_1.png"><br><img src="https://gitee.com/maoshunfu/blogimages/raw/master/img/Malt_2.png"></p>
+<hr>
+<p><em>Reading the output files</em><br>The matching is carried out at multi-resolutions, i.e., we first calculate the surface using low resolution images (top-most level of the image pyramid), then we propagate the solution to lower levels and refine it, so long we have not reached the bottom of the image pyramid. The surface reconstructions at each level are stored inside the <code>MEC-Malt</code> directory. Here’s how to decipher the files:</p>
+<ul>
+<li><p><code>MEC-Malt/Z_Num8_DeZoom1_STD-MALT.tif</code> represents the surface raster at the highest resolution;</p>
+</li>
+<li><p><code>MEC-Malt/Z_Num8_DeZoom1_STD-MALT.xml</code> is its metadata file that encodes the georeferencing; let’s assume you’d like to convert a pixel <em>(i,j)</em>  from its image coordinates to its georeferenced coordinates (i.e., object coordinates):</p>
+</li>
+<li><p><code>Z-coordinate normalised</code> :  $$\sum_{i,j}^{img}Z&#x3D;Z_Num_File^{img}(i,j)$$  </p>
+</li>
+<li><p><code>Z-coordinate</code> :  $$\sum_{i,j}^{obj}Z&#x3D;OrigineAlti+ResolutionAlti\cdot (i,j)$$</p>
+</li>
+<li><p><code>XY-coordinates</code> :  $(X,Y)&#x3D;OriginePlani+ResolutionAlti\cdot(i,j) $</p>
+</li>
+<li><p><code>MEC-Malt/Masq_STD-MALT_DeZoomX.tif</code> is a binary mask file that is a result of your input mask (if you used one) and a mask that is automatically calculated in the matching optimisation phase;</p>
+</li>
+<li><p><code>MEC-Malt/Correl_STD-MALT_Num_X.tif</code> are the images with storing the correlation scores (it is not pure correlation, it is the correlation store after the aggregation step)</p>
+</li>
+</ul>
+<p><em>Here is the <code>MEC-Malt</code> directory:</em></p>
+<p><img src="https://gitee.com/maoshunfu/blogimages/raw/master/img/Malt_out_1.png"></p>
+<hr>
+<p><em>The <code>Ortho-MEC-Malt</code> directory:</em></p>
+<p><img src="https://gitee.com/maoshunfu/blogimages/raw/master/img/Malt_out_2.png"></p>
+<hr>
+<p><em>The <code>Pyram</code> directory:</em></p>
+<p><img src="https://gitee.com/maoshunfu/blogimages/raw/master/img/Malt_out_3.png"></p>
+<hr>
+<h4 id="Create-a-grayshaded-DSM"><a href="#Create-a-grayshaded-DSM" class="headerlink" title="Create a grayshaded DSM"></a>Create a grayshaded DSM</h4><p>Represent the surface in form of a grayshading. To visually asses the quality of your surface, it is much more intuitive than just looking at the depth&#x2F;Z image.</p>
+<p><strong>–&gt;Run it,</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">mm3d GrShade MEC-Malt/Z_Num8_DeZoom1_STD-MALT.tif ModeOmbre=IgnE Mask=MEC-Malt/Masq_STD-MALT_DeZoom1.tif @ExitOnBrkp</span><br></pre></td></tr></table></figure>
+<p><img src="https://gitee.com/maoshunfu/blogimages/raw/master/img/GrShade.png"></p>
+<p><em>The <code>MEC-Malt/Z_Num8_DeZoom1_STD-MALTShade.tif</code>,</em></p>
+<p><img src="https://gitee.com/maoshunfu/blogimages/raw/master/img/GrShade_out.png"></p>
+<hr>
+<h4 id="Generate-an-orthophotmap"><a href="#Generate-an-orthophotmap" class="headerlink" title="Generate an orthophotmap"></a>Generate an orthophotmap</h4><p><code>Tawny</code> will mosaic the per-image orthopĥotomosaics created in <code>Malt</code>(i.e., <code>Ortho-MEC-Malt/Ort_*.tif</code>), during matching. It will additionally perform some basic radiometry equalization. The output orthoimage is stored in <code>Ortho-MEC-Malt/Orthophotomosaic.tif</code>, and its georeferencing is stored in <code>Ortho-MEC-Malt/Orthophotomosaic.twf</code>.</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">mm3d Tawny Ortho-MEC-Malt/ @ExitOnBrkp</span><br></pre></td></tr></table></figure>
+<p><img src="https://gitee.com/maoshunfu/blogimages/raw/master/img/ortho_1.png"><br><img src="https://gitee.com/maoshunfu/blogimages/raw/master/img/ortho_2.png"></p>
+<p><em>Now, we can see the <code>Ortho-MEC-Malt/Orthophotomosaic.tif</code>,</em></p>
+<p><img src="https://gitee.com/maoshunfu/blogimages/raw/master/img/ortho_out.png"></p>
+<hr>
+<h3 id="Method2-Multiview-matching-in-image-geometry-and-fusion"><a href="#Method2-Multiview-matching-in-image-geometry-and-fusion" class="headerlink" title="Method2: Multiview matching in image geometry and fusion"></a>Method2: Multiview matching in image geometry and fusion</h3><p>The computation will be carried out in the image geometry, where the optimization is defined in the <code>(x,y)</code> of the image space, and we are looking for the most optimal <code>depths</code> (see Figure below). This geometry is well adapted to true 3D surface reconstruction. Because the individual reconstructions are computed in image coordinate frames, a fusion will but carried out at the end.</p>
+<p><img src="https://gitee.com/maoshunfu/blogimages/raw/master/img/img-geom.jpg"></p>
+<hr>
+<p>The multiview pipeline is as follows [Rupnik et al., 2018]:</p>
+<ol>
+<li>Extract tie-points and do RPC-bundle adjustement (done previously)</li>
+<li>Do N per-stereo (or per-M image as we are not bound by the number of images) dense matching (<code>Malt GeomImage</code>)</li>
+<li>Transform the N depth maps to a common coordinate frame (<code>NuageBascule</code>)</li>
+<li>Fuse the N depth maps into one (<code>SMDM</code>)<br><img src="https://gitee.com/maoshunfu/blogimages/raw/master/img/SMDM.jpg"><hr>
+<blockquote>
+<p>Rupnik, E., Pierrot-Deseilligny, M. and Delorme, A., 2018. 3D reconstruction from multi-view VHR-satellite images in MicMac. ISPRS Journal of Photogrammetry and Remote Sensing, 139, pp.201-211.</p>
+</blockquote>
+</li>
+</ol>
+<h4 id="Do-two-per-triplet-image-matching"><a href="#Do-two-per-triplet-image-matching" class="headerlink" title="Do two per-triplet image matching"></a>Do two per-triplet image matching</h4><p>We will compute two surfaces using two different subsets of the images.</p>
+<p>Input parameters:</p>
+<ul>
+<li><p><code>GeomImage</code> is a predefined term and it defines a number of processing parameters (e.g., low regularization, small matching wodows, image geometry)</p>
+</li>
+<li><p><code>TPMM_(0435|0566|1088).*tif</code> is the image set that will be used in the processing; in this example it is an image triplet; we take 3 <strong>consecutive images</strong> to make sure that the  $\frac{B}{H}$  ratios in the set are relatively small</p>
+</li>
+<li><p><code>RPC-d0-adj</code> is the name of the directory containing the geolocalisation</p>
+</li>
+<li><p><code>Master=TPMM_0566.tif</code> is the master image, i.e., the optimization is defined over each pixel of that image</p>
+</li>
+<li><p><code>SzW=2 and Regul=0.2</code>, similarily to Method1, we add regularization and use bigger correlation windows because: (1) the geometry of the surface is smooth (i.e., no discontinuities), and (2) the images are quiet noisy;</p>
+</li>
+<li><p><code>NbVI=2</code> sets the necessary minimum number of images for MicMac to compute the surface; by default the value is set to 3 which means that in areas with only two overlapping images, the surface will not be computed;</p>
+</li>
+</ul>
+<p><strong>–&gt;First run this,</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"># The first triplet</span><br><span class="line">mm3d Malt GeomImage &quot;TPMM_(0435|0566|1088).*tif&quot; RPC-d0-adj Master=TPMM_0566.tif SzW=1 Regul=0.1 NbVI=2 ZPas=1 @ExitOnBrkp</span><br></pre></td></tr></table></figure>
+<p><img src="https://gitee.com/maoshunfu/blogimages/raw/master/img/TPMM_1.png"><br><img src="https://gitee.com/maoshunfu/blogimages/raw/master/img/TPMM_2.png"></p>
+<hr>
+<p><em>This may take almost 10 minutes, which is the most time-consuming in the workflow</em></p>
+<blockquote>
+<p>PID : 37800 ;   [Beginning at ] Thu Aug 12 17:21:47 2021<br> PID : 37800 ;   [Ending correctly at] Thu Aug 12 17:30:53 2021</p>
+</blockquote>
+<hr>
+<p><em>Then, you can get the <code>MM-Malt-Img-TPMM_0255</code> directory,</em></p>
+<p><img src="https://gitee.com/maoshunfu/blogimages/raw/master/img/TPMM_out1.png"></p>
+<hr>
+<p><em>In this directory, there are <strong>113</strong> new files:</em></p>
+<p><img src="https://gitee.com/maoshunfu/blogimages/raw/master/img/TPMM_out2.png"></p>
+<hr>
+<p><strong>–&gt;Then, do this again with different parameters,</strong></p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta"># </span><span class="language-bash">the second triplet</span></span><br><span class="line">mm3d Malt GeomImage &quot;TPMM_(0566|1088|1216).*tif&quot; RPC-d0-adj Master=TPMM_1088.tif SzW=1 Regul=0.1 NbVI=2 ZPas=1   @ExitOnBrkp</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://gitee.com/maoshunfu/blogimages/raw/master/img/TPMM_out2.png"><br><img src="https://gitee.com/maoshunfu/blogimages/raw/master/img/TPMM_out3.png"></p>
+<hr>
+<p><em>This also takes about 10 minutes.</em></p>
+<blockquote>
+<p>PID : 35656 ;   [Beginning at ] Thu Aug 12 17:37:53 2021<br> PID : 35656 ;   [Ending correctly at] Thu Aug 12 17:47:21 2021</p>
+</blockquote>
+<hr>
+<p> <em>After that, you get the <code>MM-Malt-Img-TPMM_1088</code> folder,</em></p>
+<p><img src="https://gitee.com/maoshunfu/blogimages/raw/master/img/TPMM_out3.png"></p>
+<hr>
+<p><em>In the directory, there are <strong>113</strong> files:</em></p>
+<p><img src="https://gitee.com/maoshunfu/blogimages/raw/master/img/TPMM_out4.png"></p>
+<hr>
+<h4 id="Transform-the-depth-maps-to-a-common-coordinate-frame"><a href="#Transform-the-depth-maps-to-a-common-coordinate-frame" class="headerlink" title="Transform the depth maps to a common coordinate frame"></a>Transform the depth maps to a common coordinate frame</h4><ul>
+<li><p>The  $1^{st}$  command <code>Malt</code> <code>UrbanMNE</code> does image matching in ground geometry (we’ve used it before), but since we indicate <code>DoMEC=0</code> it will not calculate the matching, all it will do is to create metadata defining the coordinate frame of the ground geometry. The output, as before, is stored in <code>MEC-Malt</code> folder;</p>
+</li>
+<li><p>The  $2^{nd}$  command NuageBascule will apply the transformation; the parameters are:</p>
+<ul>
+<li><code>MM-Malt-Img-TPMM_0566/NuageImProf_STD-MALT_Etape_8.xml</code> is the metadata file defining the input coordinate frame</li>
+<li><code>MEC-Malt/NuageImProf_STD-MALT_Etape_8.xml</code> is the metadata file defining the target coordinate frame (i.e., it is the terrain geometry)</li>
+<li><code>Fusion/DSM_Tri1.xml</code> is the output metadata file, i.e., the input file transformed to the target coordinate frame; it will be accompagned by several other files containing the surface itself, the mask and the correlation image (see the inside of the <code>Fusion</code> folder);</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"># define the common frame`</span><br><span class="line">mm3d Malt UrbanMNE &quot;.*tif&quot; RPC-d0-adj DoMEC=0  @ExitOnBrkp</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"># create a directory that will store the fused surface</span><br><span class="line">mkdir Fusion</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"># do 3D spatial similarity of the first triplet depth map</span><br><span class="line">mm3d NuageBascule MM-Malt-Img-TPMM_0566/NuageImProf_STD-MALT_Etape_8.xml MEC-Malt/NuageImProf_STD-MALT_Etape_8.xml Fusion/DSM_Tri1.xml @ExitOnBrkp</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"># do 3D spatial similarity of the second triplet depth map</span><br><span class="line">mm3d NuageBascule MM-Malt-Img-TPMM_1088/NuageImProf_STD-MALT_Etape_8.xml MEC-Malt/NuageImProf_STD-MALT_Etape_8.xml Fusion/DSM_Tri2.xml @ExitOnBrkp</span><br></pre></td></tr></table></figure>
+
+
+<p><img src="https://gitee.com/maoshunfu/blogimages/raw/master/img/Malt_UrbanMNE.png"></p>
+<hr>
+<p><em>Make Fusion directory,</em></p>
+<p><img src="https://gitee.com/maoshunfu/blogimages/raw/master/img/Fusion_.png"><br><img src="https://gitee.com/maoshunfu/blogimages/raw/master/img/Fusion_1.png"></p>
+<hr>
+<p><em>The <code>Fusion</code> directory:</em></p>
+<p><img src="https://gitee.com/maoshunfu/blogimages/raw/master/img/Fusion_out1.png"><br><img src="https://gitee.com/maoshunfu/blogimages/raw/master/img/Fusion_out2.png"></p>
+<hr>
+<h4 id="Fuse-the-individual-depth-maps"><a href="#Fuse-the-individual-depth-maps" class="headerlink" title="Fuse the individual depth maps"></a>Fuse the individual depth maps</h4><p>The fusion takes all the surfaces specified by the regular expression and merges it. The fusion takes into account the correlation images and treats it as confidence maps.</p>
+<p>Input parameters:</p>
+<ul>
+<li><code>Fusion/DSM_Tri.*xml</code> the subset of surfaces that will be merged;</li>
+</ul>
+<p>Tha result is saved to <code>Fusion/Fusion_Prof.tif</code>, there is a corresponding mask and a correlation map named with <code>_Mask</code> and <code>Correl</code> postfixes, respectively.</p>
+<p><strong>–&gt;Next,</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">mm3d SMDM Fusion/DSM_Tri.*xml  @ExitOnBrkp</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://gitee.com/maoshunfu/blogimages/raw/master/img/Fusion_DSM.png"></p>
+<hr>
+<p><em>This generates 6 new files:</em></p>
+<p><img src="https://gitee.com/maoshunfu/blogimages/raw/master/img/Fusion_DSMout.png"></p>
+<hr>
+<h4 id="Visualise-in-grayshade-and-export-to-ply"><a href="#Visualise-in-grayshade-and-export-to-ply" class="headerlink" title="Visualise in grayshade and export to ply"></a>Visualise in grayshade and export to ply</h4><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">mm3d GrShade Fusion/Fusion_Prof.tif Out=Fusion/Fusion_GShade.tif ModeOmbre=IgnE @ExitOnBrkp</span><br><span class="line"></span><br><span class="line"># export to ply</span><br><span class="line">mm3d Nuage2Ply Fusion/Fusion.xml Out=Fusion.ply</span><br></pre></td></tr></table></figure>
+
+<p><em>1. Generate <code>Fusion_GShade.tif</code></em></p>
+<p><img src="https://gitee.com/maoshunfu/blogimages/raw/master/img/Fusion_GShade.png"></p>
+<hr>
+<p><img src="https://gitee.com/maoshunfu/blogimages/raw/master/img/Fusion_GShade_out.png"></p>
+<hr>
+<p><em><code>Fusion_GShade.tif</code> in this <strong>QGIS</strong></em></p>
+<p><img src="https://gitee.com/maoshunfu/blogimages/raw/master/img/Fusion_GShade_out_1.png"></p>
+<hr>
+<p><em>2. Generate <code>Fusion.ply</code></em></p>
+<p><img src="https://gitee.com/maoshunfu/blogimages/raw/master/img/Fusion_ply.png"></p>
+<hr>
+<p><img src="https://gitee.com/maoshunfu/blogimages/raw/master/img/Fusion_ply_out.png"></p>
+<hr>
+<p><em>Here, I show this point cloud in <strong>CloudCampare</strong>:</em></p>
+<p><img src="https://gitee.com/maoshunfu/blogimages/raw/master/img/Fusion_ply_out_1.png"></p>
+<hr>
+<p><em>More over,</em></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">mm3d GrShade MM-Malt-Img-TPMM_1088/Z_Num8_DeZoom1_STD-MALT.tif Mask=MM-Malt-Img-TPMM_1088/Masq_STD-MALT_DeZoom1.tif  ModeOmbre=IgnE @ExitOnBrkp</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://gitee.com/maoshunfu/blogimages/raw/master/img/STD_MALT.png"><br><img src="https://gitee.com/maoshunfu/blogimages/raw/master/img/STD_MALT_out.png"></p>
+<hr>
+<p><em>I put this <code>Z_Num8_DeZoom1_STD-MALTShade.tif</code> in <strong>QGIS</strong>:</em></p>
+<p><img src="https://github.com/Phil-Mao/micmac-satellite_example/blob/main/imgs/STD_MALT_out_1.png"></p>
+<hr>
+<p>To here, the main procedure to deal with satellite images is finished, this may be helpful for some 3D reconstruction works! :)</p>
 ]]></content>
       <categories>
-        <category>编程开发</category>
+        <category>行星测绘</category>
       </categories>
       <tags>
         <tag>经验分享</tag>
+        <tag>Conda</tag>
         <tag>Windows</tag>
-        <tag>Mingw</tag>
-        <tag>MSYS2</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Git常用指令</title>
-    <url>/2022/03/13/Git%E5%B8%B8%E7%94%A8%E6%8C%87%E4%BB%A4/</url>
-    <content><![CDATA[<p>git常用指令集合</p>
-<h3 id="GIT-BASICS"><a href="#GIT-BASICS" class="headerlink" title="GIT BASICS"></a>GIT BASICS</h3><ul>
-<li><strong>git init</strong><br>在指定的⽬录下创建⼀个空的git repo。不带参数将在当前⽬录下创建⼀个git repo。</li>
-<li><strong>git clone <repo></strong><br>克隆⼀个指定repo到本地。指定的repo可以是本地⽂件系统或者由HTTP或SSH指定的远程路径。</li>
-<li><strong>git config user.name <code>&lt;name&gt;</code></strong><br>针对当前repo配置⽤户名。使⽤–global参数将配置全局⽤户名。</li>
-<li><strong>git add <code>&lt;directory&gt;</code></strong><br>将指定⽬录的所有修改加⼊到下⼀次commit中。把<code>&lt;directory&gt;</code>替换成<code>&lt;file&gt;</code>将添加指定⽂件的修改。</li>
-<li><strong>git commit -m <code>&quot;&lt;message&gt;&quot;</code></strong><br>提交暂存区的修改，使⽤指定的<code>&lt;message&gt;</code>作为提交信息，⽽不是打开⽂本编辑器输⼊提交信息。</li>
-<li><strong>git status</strong><br>显示哪些⽂件已被staged、未被staged以及未跟踪(untracked)。</li>
-<li><strong>git log</strong><br>以缺省格式显示全部commit历史。更多⾃定义参数请参考后续部分。键盘<code>q</code>退出。</li>
-</ul>
-<h3 id="GIT-DIFF"><a href="#GIT-DIFF" class="headerlink" title="GIT DIFF"></a>GIT DIFF</h3><ul>
-<li><strong>git diff</strong><br>⽐较⼯作区和暂存区的修改。</li>
-<li><strong>git diff HEAD</strong><br>⽐较⼯作区和上⼀次commit后的修改。</li>
-<li><strong>git diff –cached</strong><br>⽐较暂存区和上⼀次commit后的修改。</li>
-</ul>
-<h3 id="UNDOING-CHANGES"><a href="#UNDOING-CHANGES" class="headerlink" title="UNDOING CHANGES"></a>UNDOING CHANGES</h3><ul>
-<li><strong>git revert <code>&lt;commit&gt;</code></strong><br>对指定<code>&lt;commit&gt;</code>创建的一个undo的commit，并应用到当前分支</li>
-<li><strong>git reset <code>&lt;file&gt;</code></strong><br>将<code>&lt;file&gt;</code>从暂存区移除，但保持工作区不变。此操作不会修改工作区的任何文件。</li>
-</ul>
-<h3 id="REWRITING-GIT-HISTORY"><a href="#REWRITING-GIT-HISTORY" class="headerlink" title="REWRITING GIT HISTORY"></a>REWRITING GIT HISTORY</h3><ul>
-<li><strong>git oommit -m <code>&lt;message&gt;</code> –amend</strong><br>将当前staged修改合并到最近一次的commit中。</li>
-<li><strong>git rebase <code>&lt;base&gt;</code></strong><br>基于<code>&lt;base&gt;</code>对当前分支进行rebase。<code>&lt;base&gt;</code>可以是commit、分支名称、tag或相对于HEAD的commit.</li>
-<li><strong>git reflog</strong><br>显示本地repo的所有commit日志。</li>
-</ul>
-<h3 id="GIT-BRANCHES"><a href="#GIT-BRANCHES" class="headerlink" title="GIT BRANCHES"></a>GIT BRANCHES</h3><ul>
-<li><strong>git branch</strong><br>显示本地repo的所有分支</li>
-<li><strong>git switch -c <code>&lt;branch&gt;</code></strong><br>创建并切换到一个新的名为<code>&lt;branch&gt;</code>的分支。去掉参数-c将切换到一个已有的分支。</li>
-<li><strong>git merge <code>&lt;branch&gt;</code></strong><br>将指定<code>&lt;branch&gt;</code>分⽀合并到当前分⽀。</li>
-</ul>
-<h3 id="REMOTE-REPOSITORIES"><a href="#REMOTE-REPOSITORIES" class="headerlink" title="REMOTE REPOSITORIES"></a>REMOTE REPOSITORIES</h3><ul>
-<li><strong>git remote add <code>&lt;name&gt;</code> <code>&lt;url&gt;</code></strong><br>添加一个新的远程连接。添加后可以使用<code>&lt;name&gt;</code>作为指定<code>&lt;url&gt;</code>远程连接的名称。</li>
-<li><strong>git fetch <code>&lt;remote&gt;</code> <code>&lt;branch&gt;</code></strong><br>从指定<code>&lt;remote&gt;</code>抓取指定<code>&lt;branch&gt;</code>的所有commit到本地repo。去掉<code>&lt;branch&gt;</code>将抓取远程所有分⽀的修改。</li>
-<li><strong>git pull <code>&lt;remote&gt;</code></strong><br>从指定<code>&lt;remote&gt;</code>抓取所有分支的commit并立刻合并到本地repo。</li>
-<li><strong>git push <code>&lt;remote&gt;</code> <code>&lt;branch&gt;</code></strong><br>将本地指定<code>&lt;branch&gt;</code>推送到指定远程<code>&lt;remote&gt;</code>。如果远程没有对应的分⽀，将⾃动在远程创建此分⽀。</li>
-</ul>
-<h3 id="GIT-CONFIG"><a href="#GIT-CONFIG" class="headerlink" title="GIT CONFIG"></a>GIT CONFIG</h3><ul>
-<li><strong>git config –global user.name <code>&lt;name&gt;</code></strong><br>配置当前⽤户名，使⽤–global参数将针对当前系统登录⽤户⽣效。</li>
-<li><strong>git config –global user.email <code>&lt;email&gt;</code></strong><br>配置当前⽤户Email。</li>
-<li><strong>git config –global alias. <code>&lt;alias-name&gt;</code> <code>&lt;git-command&gt;</code></strong><br>配置⼀个git命令的快捷⽅式。例如：配置”alias.glog log –graph –oneline”使”git glog”相当于”git log –graph –oneline”。</li>
-<li><strong>git config –system core.editor <code>&lt;editor&gt;</code></strong><br>配置⽂本编辑器，例如vi，在必要时⾃动打开此⽂本编辑器。</li>
-<li><strong>git config –global –edit</strong><br>打开当前⽤户的git全局配置并编辑。</li>
-</ul>
-<h3 id="GIT-LOG"><a href="#GIT-LOG" class="headerlink" title="GIT LOG"></a>GIT LOG</h3><ul>
-<li><strong>git log -<code>&lt;limit&gt;</code></strong><br>限制log的显示数量。例如：”git log -5”仅显示最新5条commit。</li>
-<li><strong>git log –online</strong><br>每行显示一条commit。</li>
-<li><strong>git log –author&#x3D;”<code>&lt;pattern&gt;</code>“</strong><br>按提交者名字搜索并显示commit。</li>
-<li><strong>git log –grep&#x3D;”<code>&lt;pattern&gt;</code>“</strong><br>按指定内容搜索并显示commit。</li>
-<li><strong>git log <code>&lt;since&gt;</code>..<code>&lt;until&gt;</code></strong><br>显示指定范围的commit。范围参数可以是commit ID、分⽀名称、HEAD或任意相对位置。</li>
-<li><strong>git log – <code>&lt;file&gt;</code></strong><br>仅显示包含指定文件修改的commit。</li>
-<li><strong>git log –graph</strong><br>使用–graph参数显示图形化的branch信息。</li>
-</ul>
-<h3 id="GIT-RESET"><a href="#GIT-RESET" class="headerlink" title="GIT RESET"></a>GIT RESET</h3><ul>
-<li><strong>git reset</strong><br>移除所有暂存区的修改，但不会修改⼯作区。</li>
-<li><strong>git reset –hard</strong><br>移除所有暂存区的修改， 并强制删除所有工作区的修改。</li>
-<li><strong>git reset <code>&lt;commit&gt;</code></strong><br>将当前分支回滚到指定<code>&lt;commit&gt;</code>，清暂存区的修改，但保持工作区状态不变。</li>
-<li><strong>git reset –hard <code>&lt;commit&gt;</code></strong><br>将当前分⽀回滚到指定<code>&lt;commit&gt;</code>，清除暂存区的修改，并强制删除所有⼯作区的修改。</li>
-</ul>
-<h3 id="GIT-REBASE"><a href="#GIT-REBASE" class="headerlink" title="GIT REBASE"></a>GIT REBASE</h3><ul>
-<li><strong>git rebase -i <code>&lt;base&gt;</code></strong><br>以交互模式对当前分支做rebase。</li>
-</ul>
-<h3 id="GIT-PULL"><a href="#GIT-PULL" class="headerlink" title="GIT PULL"></a>GIT PULL</h3><ul>
-<li><strong>git pull –rebase <code>&lt;remote&gt;</code></strong><br>抓取所有远程分⽀，并以rebase模式并⼊本地repo⽽不是merge。</li>
-</ul>
-<h3 id="GIT-PUSH"><a href="#GIT-PUSH" class="headerlink" title="GIT PUSH"></a>GIT PUSH</h3><ul>
-<li><strong>git push <code>&lt;remote&gt;</code> –force</strong><br>将本地分支推送到远程。不要使用–force参数，除非完全明白这个操作。</li>
-<li><strong>git push <code>&lt;remote&gt;</code> –tags</strong><br>使⽤push命令并不会⾃动将本地tag推送到远程。加上–tags参数会将所有本地tag推送到远程。</li>
-</ul>
-]]></content>
-      <categories>
-        <category>编程开发</category>
-      </categories>
-      <tags>
-        <tag>经验分享</tag>
-        <tag>Git</tag>
+        <tag>卫星</tag>
       </tags>
   </entry>
 </search>
